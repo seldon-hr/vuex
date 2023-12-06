@@ -2,6 +2,7 @@
   "name": "chatapp",
   "version": "1.0.0",
   "scripts": {
+    "//": "Un comentario, dev es el comando para iniciar el servidor de desarrollo, es decir npm run dev esto para Vite.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 5050",
