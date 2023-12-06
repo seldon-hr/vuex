@@ -41,12 +41,14 @@ export default {
     ...mapGetters(["getUsername"]),
 
     /* username() {
+      //Acceder a la propiedad username del state
       return this.$store.state.user.username;
     }, */
   },
 
-  actions: {
-    ...mapActions(["state", ["calculateAge"]]),
+  methods: {
+    /* Llamando método desde un solo archivo. */
+    ...mapActions(["calculateAge"]),
   },
 };
 </script>
@@ -57,7 +59,7 @@ export default {
       <InputSearch v-model="search" />
       <ProfileCard
         :avatar="profile.avatar"
-        :username="getUsername"
+        :username="user.username"
         :status="profile.status"
       />
       <button @click="calculateAge()">Calculate Age</button>

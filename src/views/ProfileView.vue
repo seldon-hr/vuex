@@ -1,10 +1,15 @@
 <script>
-import store from "../store/store";
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
-  data() {
-    return {
-      store,
-    };
+  computed: {
+    ...mapState(['state', ['user']]),
+
+    ...mapGetters(['getUsername']),
+  },
+  methods: {
+    ...mapMutations(['setUsername']),
+
+    ...mapActions( ['updateUsername', 'calculateAge']),
   },
 }
 </script>
@@ -16,8 +21,16 @@ export default {
       <!-- $event.target.value
         Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
        -->
-      <input type="text" placeholder="Jane Smith" :value="store.username" @input="store.updateUsername($event.target.value)"/>
-      <button>Acceder</button>
+      <input 
+      type="text" 
+      placeholder="Jane Smith" 
+      :value="user.username" 
+      @input="updateUsername($event.target.value)"/>
+      <!-- 
+      De esta forma se llama sin la necesidad de usar mapMutations, pero no es recomendable.
+      @input="$store.commit('setUsername',$event.target.value)"
+       -->
+      <button @click="$router.push('/')">Acceder</button>
     </div>
   </div>
 </template>

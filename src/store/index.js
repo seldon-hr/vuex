@@ -22,12 +22,25 @@ const store = createStore({
         },
         getUsername(state) {
             /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
-            return state.user.username.split("").reverse().join("");
+            return state.user.username.split("").join("");
         },
     },
 
-    actions : {
-        calculateAge({ commit }) {
+    mutations: {
+        setAge(state, age) {
+            state.user.age = age;
+        },
+        setUsername(state, newUsername) {
+            state.user.username = newUsername;
+        },
+    },
+
+    actions: {
+        /* El primer objeto que se le pasa a una action, es del context,
+        context: contiene propiedades y métodos que proporcionan accesos a commit, disptach, state
+        y otras funcionalidades de vue.
+        payload: mientras que payload funge como los argumentos que recibiría la función.  */
+        calculateAge({ commit, state }) {
             const today = new Date();
             const birthDate = new Date(state.user.birth);
             let age = today.getFullYear() - birthDate.getFullYear();
@@ -38,20 +51,11 @@ const store = createStore({
             commit('setAge', age);
         },
         updateUsername({ commit }, newUsername) {
+            console.log('udpateUsername action', newUsername);
             commit('setUsername', newUsername);
         },
     }    
        
 })
 
-/* const mutations = {
-    setAge(state, age) {
-        state.user.age = age;
-    },
-    setUsername(state, newUsername) {
-        state.user.username = newUsername;
-    },
-}     */
-
 export default store;
-/* export { actions, mutations }; */
