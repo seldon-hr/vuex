@@ -1,5 +1,9 @@
 import { reactive } from "vue";
 
+/* 
+Al utilizar reactive para crear el objeto store, 
+   se asegura que cualquier cambio en el valor de username será notificado a 
+todos los componentes que estén utilizando ese valor en su vista, permitiendo que la interfaz de usuario se actualice de forma dinámic */
 const store = reactive({
     username: "seldon",
     user: {
@@ -23,6 +27,7 @@ const store = reactive({
     },
 
     updateUsername(newUsername) {
+        /* this, hace referencia al mismo objeto, al store */
         this.username = newUsername;
     },
 });

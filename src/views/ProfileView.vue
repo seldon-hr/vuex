@@ -13,6 +13,9 @@ export default {
     <div class="box">
       <img src="/avatars/avatar.jpg" alt="avatar" />
       <label for="username">Nombre de usuario</label>
+      <!-- $event.target.value
+        Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
+       -->
       <input type="text" placeholder="Jane Smith" :value="store.username" @input="store.updateUsername($event.target.value)"/>
       <button>Acceder</button>
     </div>

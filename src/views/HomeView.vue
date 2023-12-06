@@ -3,7 +3,7 @@ import { RouterView, RouterLink } from "vue-router";
 import InputSearch from "@/components/InputSearch.vue";
 import ProfileCard from "@/components/ProfileCard.vue";
 import ChatItem from "@/components/ChatItem.vue";
-import store from "../store/store";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -16,7 +16,6 @@ export default {
   /* Options API */
   data() {
     return {
-      store,
       search: "",
       profile: {
         username: "Diana Nerd",
@@ -33,6 +32,22 @@ export default {
       ],
     };
   },
+
+  computed: {
+    ...mapState(["state", [
+      "user",
+    ]]),
+
+    ...mapGetters(["getUsername"]),
+
+    /* username() {
+      return this.$store.state.user.username;
+    }, */
+  },
+
+  actions: {
+    ...mapActions(["state", ["calculateAge"]]),
+  },
 };
 </script>
 
@@ -42,11 +57,11 @@ export default {
       <InputSearch v-model="search" />
       <ProfileCard
         :avatar="profile.avatar"
-        :username="store.username"
+        :username="getUsername"
         :status="profile.status"
       />
-      <button @click="store.calculateAge()">Calculate Age</button>
-      <span style="display:inline;">Edad: {{ store.user.age }}</span>
+      <button @click="calculateAge()">Calculate Age</button>
+      <span style="display:inline;">Edad: {{ user.age }}</span>
       <RouterLink to="/" class="channels-title"
         >Canales <Icon icon="carbon:hashtag"
       /></RouterLink>
