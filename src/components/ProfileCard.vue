@@ -1,26 +1,28 @@
+/* Componentes programados usados la sintaxis de vue 3  Composition API, pero en sintaxis
+Options API */
 <script setup>
-import { toRefs, computed } from 'vue'
+import { toRefs, computed } from "vue";
 
 const props = defineProps({
   avatar: {
     type: String,
-    default: 'https://via.placeholder.com/500'
+    default: "https://via.placeholder.com/500",
   },
   username: {
     type: String,
-    default: 'Username'
+    default: "Username",
   },
   status: {
     type: String,
-    default: null
-  }
-})
+    default: null,
+  },
+});
 
-const { status } = toRefs(props)
+const { status } = toRefs(props);
 
-const statusText = computed(
-  () => status.value === 'active' ? 'Activo' : 'Inactivo'
-)
+const statusText = computed(() =>
+  status.value === "active" ? "Activo" : "Inactivo"
+);
 </script>
 
 <template>
@@ -30,10 +32,7 @@ const statusText = computed(
     </div>
     <div class="details">
       <h4>{{ username }}</h4>
-      <div
-        class="status"
-        :class="{ active: status === 'active' }"
-      >
+      <div class="status" :class="{ active: status === 'active' }">
         {{ statusText }}
       </div>
     </div>
