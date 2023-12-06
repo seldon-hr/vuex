@@ -38,7 +38,7 @@ const store = createStore({
     actions: {
         /* El primer objeto que se le pasa a una action, es del context,
         context: contiene propiedades y métodos que proporcionan accesos a commit, disptach, state
-        y otras funcionalidades de vue.
+        y otras funcionalidades de vue. Hace referencia al store.
         payload: mientras que payload funge como los argumentos que recibiría la función.  */
         calculateAge({ commit, state }) {
             const today = new Date();
