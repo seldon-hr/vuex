@@ -9,7 +9,7 @@ export default {
     return {
       title: 'Nombre del canal',
       people: [
-        { id: 1, name: 'Tú', avatar: '/avatars/avatar.jpg' },
+        { id: 1, name: 'You', avatar: '/avatars/avatar.jpg' },
         { id: 2, name: 'Jason', avatar: '/avatars/avatar-02.jpg' },
         { id: 3, name: 'Janet', avatar: '/avatars/avatar-03.jpg' }
       ],

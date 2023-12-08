@@ -65,13 +65,13 @@ const store = createStore({
         verifyPassword({ state }) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    if (state.user.password == state.password) {
+                    if (state.user.password == state.password  && state.user.username == state.username) {
                         resolve(true);
                         //Redireccionar a la página de inicio
                          router.push('/home')
                     } else {
                         reject(false);
-                        alert('Contraseña incorrecta');
+                        alert('Contraseña o username incorrecto');
                     }
                 }, 500);
             });
