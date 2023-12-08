@@ -1,13 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+/* import HomeView from '../views/HomeView.vue'; */
+import login from '../views/login.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView,
+      path: '/login',
+      name: 'login',
+      component: login,
       children: [
         {
           path: ':id(\\d+)',
@@ -18,6 +19,11 @@ const router = createRouter({
           component: () => import('../views/VoidMessagesView.vue')
         }
       ]
+    },
+    {
+      path: '/home',
+      name: 'homeView',
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: '/profile',

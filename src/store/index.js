@@ -1,4 +1,5 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import router from '../router';
 
 const store = createStore({
   state() {
@@ -9,7 +10,10 @@ const store = createStore({
                 age: 0,
                 email: "seldon@seldon",
                 birth: "1998-12-12",
+                password: "123456",
             },
+            password: "",
+            username: "",
         }
     }, 
 
@@ -31,7 +35,10 @@ const store = createStore({
             state.user.age = age;
         },
         setUsername(state, newUsername) {
-            state.user.username = newUsername;
+            state.username = newUsername;
+        },
+        setPassword(state, newPassword) {
+            state.password = newPassword;
         },
     },
 
@@ -54,6 +61,21 @@ const store = createStore({
             console.log('udpateUsername action', newUsername);
             commit('setUsername', newUsername);
         },
+
+        verifyPassword({ state }) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (state.user.password == state.password) {
+                        resolve(true);
+                        //Redireccionar a la página de inicio
+                         router.push('/home')
+                    } else {
+                        reject(false);
+                        alert('Contraseña incorrecta');
+                    }
+                }, 500);
+            });
+        }
     }    
        
 })
