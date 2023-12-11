@@ -68,7 +68,7 @@ const store = createStore({
                     if (state.user.password == state.password  && state.user.username == state.username) {
                         resolve(true);
                         //Redireccionar a la página de inicio
-                         router.push('/home')
+                         router.push('/')
                     } else {
                         reject(false);
                         alert('Contraseña o username incorrecto');

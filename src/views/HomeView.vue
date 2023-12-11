@@ -64,7 +64,7 @@ export default {
       />
       <button @click="calculateAge()">Calculate Age</button>
       <span style="display:inline;">Edad: {{ user.age == 0 ? ' ' : user.age }}</span>
-      <RouterLink to="/home/" class="channels-title"
+      <RouterLink to="/" class="channels-title"
         >Canales <Icon icon="carbon:hashtag"
       /></RouterLink>
       <div class="channels">

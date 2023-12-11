@@ -7,11 +7,6 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: login,
-    },
-    {
-      path: '/home',
       name: 'home',
       component: HomeView,
       children: [
@@ -24,6 +19,11 @@ const router = createRouter({
           component: () => import('../views/VoidMessagesView.vue')
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login,
     },
     {
       path: '/profile',
