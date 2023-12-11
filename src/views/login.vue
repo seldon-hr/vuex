@@ -48,7 +48,7 @@ export default {
       <label for="username">Username:</label>
       <!-- $event.target.value
         Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
-        Es cuando se le agrega un valor al input
+        Es cuando se le agrega un valor al inputl
        -->
       <input 
       v-model="username"
