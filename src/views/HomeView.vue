@@ -17,11 +17,11 @@ export default {
   data() {
     return {
       search: "",
-      profile: {
+      /* profile: {
         username: "Diana Nerd",
         status: "active",
         avatar: "/avatars/avatar.jpg",
-      },
+      }, */
       channels: [
         { id: 1, name: "General", messages: 27 },
         { id: 2, name: "Emergencias", messages: null },
@@ -34,9 +34,13 @@ export default {
   },
 
   computed: {
-    ...mapState(["state", [
-      "user",
-    ]]),
+    ...mapState({
+      profile: "profile",
+    }),
+
+    user() {
+      return this.profile.user;
+    },
 
     ...mapGetters(["getUsername"]),
 
@@ -58,9 +62,9 @@ export default {
     <aside>
       <InputSearch v-model="search" />
       <ProfileCard
-        :avatar="profile.avatar"
+        :avatar="user.avatar"
         :username="user.username"
-        :status="profile.status"
+        :status="user.status"
       />
       <button @click="calculateAge()">Calculate Age</button>
       <span style="display:inline;">Edad: {{ user.age == 0 ? ' ' : user.age }}</span>

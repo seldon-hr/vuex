@@ -1,19 +1,20 @@
 import { createStore } from 'vuex';
 import router from '../router';
 import { gettingUser } from '../api';
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD, SET_AGE } from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD } from '@/common/mutatition-types';
+
+import profile from './modules/profile/index.js';
 
 const store = createStore({
+
+    modules: {
+        //Aqui se importan los modulos
+        profile,
+    },
+  
+    
   state() {
         return {
-            user: {
-                username: "seldon",
-                name: "Seldon",
-                age: 0,
-                email: "seldon@seldon",
-                birth: "1998-12-12",
-                password: "123456",
-            },
             password: "",
             username: "",
         }
@@ -23,9 +24,6 @@ const store = createStore({
         getUser(state) {
             return state.user;
         },
-        getAge(state) {
-            return state.user.age;
-        },
         getUsername(state) {
             /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
             return state.user.username.split("").join("");
@@ -33,9 +31,6 @@ const store = createStore({
     },
 
     mutations: {
-        [SET_AGE](state, age) {
-            state.user.age = age;
-        },
         /* 
             La sintaxis que se muestra en el código seleccionado es específica de JavaScript y se utiliza en el contexto de un proyecto de Vue.js.
             En Vue.js, se utiliza una sintaxis especial para definir las mutaciones en el store (almacén) de Vuex, que es una biblioteca de administración de estado para aplicaciones Vue.js.
@@ -50,20 +45,6 @@ const store = createStore({
     },
 
     actions: {
-        /* El primer objeto que se le pasa a una action, es del context,
-        context: contiene propiedades y métodos que proporcionan accesos a commit, disptach, state
-        y otras funcionalidades de vue. Hace referencia al store.
-        payload: mientras que payload funge como los argumentos que recibiría la función.  */
-        calculateAge({ commit, state }) {
-            const today = new Date();
-            const birthDate = new Date(state.user.birth);
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const month = today.getMonth() - birthDate.getMonth();
-            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            commit(SET_AGE, age);
-        },
 
         async updateUsername({ commit }, newUsername) {
             console.log(newUsername);
