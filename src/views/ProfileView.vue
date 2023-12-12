@@ -2,14 +2,16 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   computed: {
-    ...mapState(['user', 'username']),
+    ...mapState({
+      user: state => state.profile.user,
+    }),
 
     ...mapGetters(['getUsername']),
   },
   methods: {
     ...mapMutations(['setUsername']),
 
-    ...mapActions( ['updateUsername', 'calculateAge']),
+    ...mapActions( ['getUser', 'calculateAge']),
   },
 }
 </script>
@@ -24,8 +26,8 @@ export default {
       <input 
       type="text" 
       placeholder="Jane Smith" 
-      :value="username" 
-      @input="updateUsername($event.target.value)"/>
+      :value="user.username" 
+      @input="getUser($event.target.value)"/>
       <!-- 
       De esta forma se llama sin la necesidad de usar mapMutations, pero no es recomendable.
       @input="$store.commit('setUsername',$event.target.value)"

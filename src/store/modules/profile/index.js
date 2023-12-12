@@ -16,12 +16,13 @@ const profile = {
            },
            getters: {
                getAge(state) {
-                   return state.age;
+                   return state.user.age;
                },
            },
            mutations: {
-               setAge(state, age) {
-                   state.age = age;
+               [SET_AGE](state, age) {
+                   console.log('Mutation', age);
+                   state.user.age = age;
                },
            },
            actions: {
@@ -32,7 +33,8 @@ const profile = {
                     const month = today.getMonth() - birthDate.getMonth();
                     if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
                         age--;
-                    }
+                   }
+                   console.log(age);
                     commit(SET_AGE, age);
                 },
            },

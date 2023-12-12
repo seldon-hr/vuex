@@ -52,7 +52,9 @@ export default {
 
   methods: {
     /* Llamando método desde un solo archivo. */
-    ...mapActions(["calculateAge"]),
+    ...mapActions({
+      calculateAge: "profile/calculateAge",
+    }),
   },
 };
 </script>

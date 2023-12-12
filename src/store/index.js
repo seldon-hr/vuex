@@ -26,7 +26,7 @@ const store = createStore({
         },
         getUsername(state) {
             /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
-            return state.user.username.split("").join("");
+            return state.username.split("").join("");
         },
     },
 
@@ -46,7 +46,7 @@ const store = createStore({
 
     actions: {
 
-        async updateUsername({ commit }, newUsername) {
+        async getUser({ commit }, newUsername) {
             console.log(newUsername);
             const user = await gettingUser(1);
             commit(COMMIT_UPDATE_USERNAME, user.username);
@@ -55,7 +55,11 @@ const store = createStore({
         verifyPassword({ state }) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    if (state.user.password == state.password  && state.user.username == state.username) {
+                    //Obtener contraseña del módulo profile desde el store principal a un módulo secundario.
+                    const PASSWORD_USER = profile.state.user.password;
+                    const USERNAME_USER = profile.state.user.username;
+
+                    if (PASSWORD_USER == state.password  && USERNAME_USER == state.username) {
                         resolve(true);
                         //Redireccionar a la página de inicio
                          router.push('/')
