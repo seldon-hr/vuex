@@ -1,4 +1,4 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD, SET_USER_REQUEST} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD, SET_USER_REQUEST, SET_USER_ENTRY} from '@/common/mutatition-types';
 import { gettingUser } from '../../../api';
 import router from '@/router';
 
@@ -25,7 +25,10 @@ const account = {
             state.username = newUsername;
         },
         [SET_USER_REQUEST](state, userRequest) {
-            state.user = userRequest;
+            state.userRequest = userRequest;
+        },
+        [SET_USER_ENTRY](state, usernameEntry) {
+            state.username = usernameEntry;
         },
         [SET_PASSWORD](state, newPassword) {
             state.password = newPassword;
@@ -33,9 +36,8 @@ const account = {
     },
 
     actions: {
-            
-            async getUser({ commit }, search) {
-            console.log(search);
+            async getUsers({ commit }, usernameEntry) {
+            console.log(usernameEntry);
             /* //TODO: search se va convertir en el data que se va a pedir en la consulta.
                 Es decir si encuentra un usuario llamador Bert, el cual sería la consulta que se pide en
                 la petición, entonces esta va a ser la respuesta que se va a obtener y asignar en el state
@@ -43,8 +45,10 @@ const account = {
 
                 *Al parecer no sería pasado como argumento, sino del propio state.
             */
-                const user = await gettingUser(1);
+            const user = await gettingUser(1);
+            console.log(user);
                 commit(SET_USER_REQUEST, user);
+                commit(SET_USER_ENTRY, usernameEntry);
             },
     
             verifyPassword({ state, rootState }) {

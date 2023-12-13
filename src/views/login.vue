@@ -44,7 +44,8 @@ export default {
     }),
 
     ...mapActions({
-      verifyPassword: "account/verifyPassword", 
+      verifyPassword: "account/verifyPassword",
+      getUsers: "account/getUsers", 
     }),
   },
 }
@@ -62,7 +63,7 @@ export default {
       v-model="username"
       type="text" 
       placeholder="Jane Smith" 
-      @input="setUsername($event.target.value)"/>
+      @input="getUsers($event.target.value)"/>
       <label for="password">Password:</label>
       <input 
       v-model="password"
