@@ -7,6 +7,7 @@ const store = createStore({
 
     modules: {
         //Aqui se importan los modulos
+        account,
         profile,
     },
   

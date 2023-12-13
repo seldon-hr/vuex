@@ -3,11 +3,13 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   computed: {
     //Llamar al state de Vuex
-    ...mapState(['user', 'username', 'password']),
+    ...mapState({
+      account: "account",
+    }),
 
     user: {
       get() {
-        return this.user;
+        return this.account.user;
       },
       set(value) {
         this.$store.commit('setUser', value);
@@ -16,7 +18,7 @@ export default {
 
     username: {
       get() {
-        return this.username;
+        return this.account.username;
       },
       set(value) {
         this.setUsername(value);
@@ -35,9 +37,15 @@ export default {
     ...mapGetters(['getUsername']),
   },
   methods: {
-    ...mapMutations(['setUsername', 'setPassword']),
+    ...mapMutations({
+      setUser: "account/setUser",
+      setUsername: "account/setUsername",
+      setPassword: "account/setPassword",
+    }),
 
-    ...mapActions( ['updateUsername', 'calculateAge', 'verifyPassword']),
+    ...mapActions({
+      verifyPassword: "account/verifyPassword", 
+    }),
   },
 }
 </script>

@@ -1,5 +1,6 @@
 import { COMMIT_UPDATE_USERNAME, SET_PASSWORD, SET_USER_REQUEST} from '@/common/mutatition-types';
 import { gettingUser } from '../../../api';
+import router from '@/router';
 
 const account = {
     namespaced: true,
@@ -35,21 +36,25 @@ const account = {
             
             async getUser({ commit }, search) {
             console.log(search);
-            /* search se va convertir en el data que se va a pedir en la consulta.
+            /* //TODO: search se va convertir en el data que se va a pedir en la consulta.
                 Es decir si encuentra un usuario llamador Bert, el cual sería la consulta que se pide en
                 la petición, entonces esta va a ser la respuesta que se va a obtener y asignar en el state
                 para la comparativa.
+
+                *Al parecer no sería pasado como argumento, sino del propio state.
             */
                 const user = await gettingUser(1);
                 commit(SET_USER_REQUEST, user);
             },
     
-            verifyPassword({ state }) {
+            verifyPassword({ state, rootState }) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
                         //Obtener contraseña del módulo profile desde el store principal a un módulo secundario.
-                        const PASSWORD_USER = state.userRequest.password;
-                        const USERNAME_USER = state.userRequest.username;
+                        //TODO: Se va a obtener con la data que se va a asignar desde la petición.
+                        const PASSWORD_USER = rootState.profile.user.password;
+                        const USERNAME_USER = rootState.profile.user.username;
+                        console.log('Desde el módulo account, obeteniendo lo del profile', PASSWORD_USER, USERNAME_USER);
     
                         if (PASSWORD_USER == state.password  && USERNAME_USER == state.username) {
                             resolve(true);
