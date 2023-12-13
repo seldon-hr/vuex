@@ -1,13 +1,19 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
+  created() {
+    this.getUsers();
+  },
+
   computed: {
     //Llamar al state de Vuex
-    ...mapState(['user', 'username', 'password']),
+    ...mapState({
+      account: "account",
+    }),
 
     user: {
       get() {
-        return this.user;
+        return this.account.user;
       },
       set(value) {
         this.$store.commit('setUser', value);
@@ -16,10 +22,10 @@ export default {
 
     username: {
       get() {
-        return this.username;
+        return this.account.username;
       },
       set(value) {
-        this.setUsername(value);
+        this.setUsernameEntry(value);
       },
     },
 
@@ -35,9 +41,17 @@ export default {
     ...mapGetters(['getUsername']),
   },
   methods: {
-    ...mapMutations(['setUsername', 'setPassword']),
+    ...mapMutations({
+      setUser: "account/setUser",
+      setUsernameEntry: "account/setUsernameEntry",
+      setPassword: "account/setPasswordEntry",
+    }),
 
-    ...mapActions( ['updateUsername', 'calculateAge', 'verifyPassword']),
+    ...mapActions({
+      identifyUser: "account/identifyUser",
+      verifyPassword: "account/verifyPassword",
+      getUsers: "account/getUsers", 
+    }),
   },
 }
 </script>
@@ -54,7 +68,8 @@ export default {
       v-model="username"
       type="text" 
       placeholder="Jane Smith" 
-      @input="setUsername($event.target.value)"/>
+      @input="setUsernameEntry($event.target.value)"
+      @blur="identifyUser()"/>
       <label for="password">Password:</label>
       <input 
       v-model="password"

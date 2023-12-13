@@ -1,4 +1,4 @@
-import { SET_AGE } from '@/common/mutatition-types';
+import { SET_AGE, SET_USERNAME } from '@/common/mutatition-types';
 
 const profile = {
            namespaced: true,
@@ -21,8 +21,10 @@ const profile = {
            },
            mutations: {
                [SET_AGE](state, age) {
-                   console.log('Mutation', age);
                    state.user.age = age;
+               },
+               [SET_USERNAME](state, age) {
+                   state.user.username = age;
                },
            },
            actions: {
