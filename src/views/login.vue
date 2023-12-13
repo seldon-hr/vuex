@@ -1,6 +1,10 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
+  created() {
+    this.getUsers();
+  },
+
   computed: {
     //Llamar al state de Vuex
     ...mapState({
@@ -63,7 +67,7 @@ export default {
       v-model="username"
       type="text" 
       placeholder="Jane Smith" 
-      @input="getUsers($event.target.value)"/>
+      @input="setUsername($event.target.value)"/>
       <label for="password">Password:</label>
       <input 
       v-model="password"

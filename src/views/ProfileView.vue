@@ -1,6 +1,7 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
+
   computed: {
     ...mapState({
       user: state => state.profile.user,
@@ -15,7 +16,6 @@ export default {
 
     ...mapActions({
       calculateAge: "profile/calculateAge",
-      getUsers: "account/getUsers",
     }),
   },
 }
@@ -32,7 +32,7 @@ export default {
       type="text" 
       placeholder="Jane Smith" 
       :value="user.username" 
-      @input="getUsers($event.target.value)"/>
+      @input="setUsername($event.target.value)"/>
       <!-- 
       De esta forma se llama sin la necesidad de usar mapMutations, pero no es recomendable.
       @input="$store.commit('setUsername',$event.target.value)"
