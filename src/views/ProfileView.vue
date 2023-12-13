@@ -9,9 +9,14 @@ export default {
     ...mapGetters(['getUsername']),
   },
   methods: {
-    ...mapMutations(['setUsername']),
+    ...mapMutations({
+      setUsername: "profile/setUsername",
+    }),
 
-    ...mapActions( ['getUser', 'calculateAge']),
+    ...mapActions({
+      calculateAge: "profile/calculateAge",
+      getUsers: "account/getUsers",
+    }),
   },
 }
 </script>
@@ -27,7 +32,7 @@ export default {
       type="text" 
       placeholder="Jane Smith" 
       :value="user.username" 
-      @input="getUser($event.target.value)"/>
+      @input="getUsers($event.target.value)"/>
       <!-- 
       De esta forma se llama sin la necesidad de usar mapMutations, pero no es recomendable.
       @input="$store.commit('setUsername',$event.target.value)"

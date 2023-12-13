@@ -10,25 +10,6 @@ const store = createStore({
         account,
         profile,
     },
-  
-    
-  state() {
-        return {
-            password: "",
-            username: "",
-        }
-    }, 
-
-    getters: {
-        getUser(state) {
-            return state.user;
-        },
-        getUsername(state) {
-            /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
-            return state.username.split("").join("");
-        },
-    },
-
 })
 
 export default store;
