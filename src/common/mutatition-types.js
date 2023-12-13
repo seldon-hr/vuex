@@ -1,6 +1,12 @@
+// For account module
 export const COMMIT_UPDATE_USERNAME = 'setUsername';
-export const SET_AGE = 'setAge';
 export const SET_USER_REQUEST = 'setUserRequest';
-export const SET_PASSWORD = 'setPassword';
-export const SET_USER_ENTRY = 'setUserEntry';
+export const SET_PASSWORD_ENTRY = 'setPasswordEntry';
+export const SET_USERNAME_ENTRY = 'setUsernameEntry';
+export const SET_USER_LIST = 'setUserList';
+export const SET_USER = 'setUser';
+
+
+//For profile module
 export const SET_USERNAME = 'setUsername';
+export const SET_AGE = 'setAge';

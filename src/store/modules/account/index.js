@@ -1,5 +1,5 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD, SET_USER_REQUEST, SET_USER_ENTRY} from '@/common/mutatition-types';
-import { gettingUser } from '../../../api';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER} from '@/common/mutatition-types';
+import { gettingUsers } from '../../../api';
 import router from '@/router';
 
 const account = {
@@ -7,7 +7,9 @@ const account = {
     state: {
         password: "",
         username: "",
+        user: {},
         userRequest: {},
+        userList: [],
     },
 
     getters: {
@@ -21,46 +23,58 @@ const account = {
     },
 
     mutations: {
+        [SET_USER_LIST](state, userList) {
+            state.userList = userList;
+        },
         [COMMIT_UPDATE_USERNAME](state, newUsername) {
             state.username = newUsername;
         },
         [SET_USER_REQUEST](state, userRequest) {
             state.userRequest = userRequest;
         },
-        [SET_USER_ENTRY](state, usernameEntry) {
-            state.username = usernameEntry;
+        [SET_USER](state, user) {
+            state.user = user;
         },
-        [SET_PASSWORD](state, newPassword) {
-            state.password = newPassword;
+        [SET_USERNAME_ENTRY](state, usernameEntry) {
+            state.userRequest.username = usernameEntry;
+        },
+        [SET_PASSWORD_ENTRY](state, passwordEntry) {
+            state.userRequest.password = passwordEntry;
         },
     },
 
     actions: {
-            async getUsers({ commit }, usernameEntry) {
-            console.log(usernameEntry);
-            /* //TODO: search se va convertir en el data que se va a pedir en la consulta.
-                Es decir si encuentra un usuario llamador Bert, el cual sería la consulta que se pide en
-                la petición, entonces esta va a ser la respuesta que se va a obtener y asignar en el state
-                para la comparativa.
-
-                *Al parecer no sería pasado como argumento, sino del propio state.
-            */
-            const user = await gettingUser(1);
-            console.log(user);
-                commit(SET_USER_REQUEST, user);
-                commit(SET_USER_ENTRY, usernameEntry);
+            async getUsers({ commit }) {
+                const listUsers = await gettingUsers();
+                commit(SET_USER_LIST, listUsers);
             },
+        
+            identifyUser({ commit, state }) {
+                const userFind = state.userList.find(user => user.username == state.userRequest.username);
+                if (userFind) {
+                    /* 
+                    * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
+                     */
+                    userFind.password = userFind.username;
+                    userFind.avatar = "/avatars/avatar.jpg";
+                    
+                    commit(SET_USER, userFind);
+                    alert("Usuario encontrado, ;)");
+                } else {
+                    alert("Usuario no encontrado, ;(");
+                }    
+            },    
+
     
-            verifyPassword({ state, rootState }) {
+            verifyPassword({ state }) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
-                        //Obtener contraseña del módulo profile desde el store principal a un módulo secundario.
-                        //TODO: Se va a obtener con la data que se va a asignar desde la petición.
-                        const PASSWORD_USER = rootState.profile.user.password;
-                        const USERNAME_USER = rootState.profile.user.username;
+
+                        const PASSWORD_USER = state.user.password;
+                        const USERNAME_USER = state.user.username;
                         console.log('Desde el módulo account, obeteniendo lo del profile', PASSWORD_USER, USERNAME_USER);
     
-                        if (PASSWORD_USER == state.password  && USERNAME_USER == state.username) {
+                        if (PASSWORD_USER == state.userRequest.password  && USERNAME_USER == state.userRequest.username) {
                             resolve(true);
                             router.push('/')
                         } else {

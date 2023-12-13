@@ -25,7 +25,7 @@ export default {
         return this.account.username;
       },
       set(value) {
-        this.setUsername(value);
+        this.setUsernameEntry(value);
       },
     },
 
@@ -43,11 +43,12 @@ export default {
   methods: {
     ...mapMutations({
       setUser: "account/setUser",
-      setUsername: "account/setUsername",
-      setPassword: "account/setPassword",
+      setUsernameEntry: "account/setUsernameEntry",
+      setPassword: "account/setPasswordEntry",
     }),
 
     ...mapActions({
+      identifyUser: "account/identifyUser",
       verifyPassword: "account/verifyPassword",
       getUsers: "account/getUsers", 
     }),
@@ -67,7 +68,8 @@ export default {
       v-model="username"
       type="text" 
       placeholder="Jane Smith" 
-      @input="setUsername($event.target.value)"/>
+      @input="setUsernameEntry($event.target.value)"
+      @blur="identifyUser()"/>
       <label for="password">Password:</label>
       <input 
       v-model="password"
