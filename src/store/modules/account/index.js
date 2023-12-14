@@ -1,4 +1,4 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
 
@@ -10,6 +10,8 @@ const account = {
         user: {},
         userRequest: {},
         userList: [],
+
+        userNotFound: false,
     },
 
     getters: {
@@ -41,6 +43,9 @@ const account = {
         [SET_PASSWORD_ENTRY](state, passwordEntry) {
             state.userRequest.password = passwordEntry;
         },
+        [SET_USER_NOT_FOUND](state, userNotFound) {
+            state.userNotFound = userNotFound;
+        }
     },
 
     actions: {
@@ -59,10 +64,12 @@ const account = {
                     userFind.avatar = "/avatars/avatar.jpg";
                     
                     commit(SET_USER, userFind);
-                    alert("Usuario encontrado, ;)");
+                    /* Usuario encontrado */
+                    commit(SET_USER_NOT_FOUND, false);
                 } else {
-                    alert("Usuario no encontrado, ;(");
-                }    
+                    /* Usuario no encontrado */
+                    commit(SET_USER_NOT_FOUND, true);
+                }  
             },    
 
     
