@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   created() {
     this.getUsers();
@@ -16,8 +16,12 @@ export default {
         return this.account.user;
       },
       set(value) {
-        this.$store.commit('setUser', value);
+        this.$store.commit("setUser", value);
       },
+    },
+
+    userNotFound() {
+      return this.account.userNotFound;
     },
 
     username: {
@@ -26,6 +30,7 @@ export default {
       },
       set(value) {
         this.setUsernameEntry(value);
+        this.identifyUser();
       },
     },
 
@@ -38,7 +43,7 @@ export default {
       },
     },
 
-    ...mapGetters(['getUsername']),
+    ...mapGetters(["getUsername"]),
   },
   methods: {
     ...mapMutations({
@@ -50,10 +55,10 @@ export default {
     ...mapActions({
       identifyUser: "account/identifyUser",
       verifyPassword: "account/verifyPassword",
-      getUsers: "account/getUsers", 
+      getUsers: "account/getUsers",
     }),
   },
-}
+};
 </script>
 <template>
   <div class="profile">
@@ -64,18 +69,10 @@ export default {
         Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
         Es cuando se le agrega un valor al inputl
        -->
-      <input 
-      v-model="username"
-      type="text" 
-      placeholder="Jane Smith" 
-      @input="setUsernameEntry($event.target.value)"
-      @blur="identifyUser()"/>
+      <input v-model="username" type="text" placeholder="Jane Smith" />
+      <span v-if="userNotFound">{{ "El usuario no fue encontrado" }}</span>
       <label for="password">Password:</label>
-      <input 
-      v-model="password"
-      type="password" 
-      placeholder="............." 
-      />
+      <input v-model="password" type="password" placeholder="............." />
 
       <button @click="verifyPassword(password)">Acceder</button>
     </div>
@@ -100,5 +97,9 @@ export default {
       @apply w-full px-3 py-2 mt-2 rounded-md bg-zinc-600;
     }
   }
+}
+
+span {
+  @apply text-red-500;
 }
 </style>
