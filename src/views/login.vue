@@ -83,7 +83,7 @@ export default {
 <template>
   <div class="profile">
     <div class="box">
-      <img src="/avatars/avatar.jpg" alt="avatar" />
+      <img src="/avatars/genericAvatar.jpg" alt="avatar" />
       <label for="username">Username:</label>
       <input
         v-model="username"

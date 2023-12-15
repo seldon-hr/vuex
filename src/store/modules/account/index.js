@@ -1,6 +1,7 @@
 import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
+import { appStorage } from '../../../helpers/appStorage';
 
 const account = {
     namespaced: true,
@@ -75,6 +76,9 @@ const account = {
 
                     userFind.password = userFind.username;
                     userFind.avatar = "/avatars/avatar.jpg";
+                    userFind.birthDate = "1990-01-01";
+                    userFind.age = 0;
+                    userFind.status = "active";
                     
                     commit(SET_USER, userFind);
                     /* commit(SET_USERNAME_ENTRY, userFind.username); */
@@ -89,7 +93,7 @@ const account = {
             },    
 
     
-        verifyPassword({ state, commit },) {
+        verifyPassword({ state, commit, dispatch },) {
             if (!state.userRequest.username == '' || !state.userRequest.password == '' || !state.userRequest.username == undefined || !state.userRequest.password == undefined) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
@@ -103,6 +107,9 @@ const account = {
 
                             //Eliminar el usuarioRequest
                             commit(SET_USER_REQUEST, {});
+
+                            //Asignar el usuario al storage
+                            dispatch('asignUserToStorage');
                             router.push('/')
                         } else {
                             reject(false);
@@ -117,6 +124,12 @@ const account = {
                 commit(SET_NO_USERNAME_NEITHER_PASSWORD, true);
             }
         },
+
+        asignUserToStorage({ state }) {
+            appStorage.setUser(state.user);
+        },
+
+
         },
     }
 
