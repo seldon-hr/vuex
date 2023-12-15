@@ -26,11 +26,10 @@ export default {
 
     username: {
       get() {
-        return this.account.username;
+        return this.account.userRequest.username;
       },
       set(value) {
         this.setUsernameEntry(value);
-        this.identifyUser();
       },
     },
 
@@ -65,11 +64,12 @@ export default {
     <div class="box">
       <img src="/avatars/avatar.jpg" alt="avatar" />
       <label for="username">Username:</label>
-      <!-- $event.target.value
-        Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
-        Es cuando se le agrega un valor al inputl
-       -->
-      <input v-model="username" type="text" placeholder="Jane Smith" />
+      <input
+        v-model="username"
+        type="text"
+        placeholder="Jane Smith"
+        @blur="identifyUser()"
+      />
       <span v-if="userNotFound">{{ "El usuario no fue encontrado" }}</span>
       <label for="password">Password:</label>
       <input v-model="password" type="password" placeholder="............." />
@@ -101,5 +101,6 @@ export default {
 
 span {
   @apply text-red-500;
+  font-size: 0.8rem;
 }
 </style>

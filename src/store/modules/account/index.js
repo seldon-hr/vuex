@@ -64,10 +64,12 @@ const account = {
                     userFind.avatar = "/avatars/avatar.jpg";
                     
                     commit(SET_USER, userFind);
+                    commit(SET_USERNAME_ENTRY, userFind.username);
                     /* Usuario encontrado */
                     commit(SET_USER_NOT_FOUND, false);
                 } else {
                     /* Usuario no encontrado */
+                    commit(SET_USERNAME_ENTRY, '');
                     commit(SET_USER_NOT_FOUND, true);
                 }  
             },    
