@@ -24,19 +24,26 @@ export default {
       return this.account.userNotFound;
     },
 
+    passwordIncorrect() {
+      return this.account.passwordIncorrect;
+    },
+
+    noUsernameNeitherPassword() {
+      return this.account.noUsernameNeitherPassword;
+    },
+
     username: {
       get() {
-        return this.account.username;
+        return this.account.userRequest.username;
       },
       set(value) {
         this.setUsernameEntry(value);
-        this.identifyUser();
       },
     },
 
     password: {
       get() {
-        return this.password;
+        return this.account.userRequest.password;
       },
       set(value) {
         this.setPassword(value);
@@ -50,6 +57,7 @@ export default {
       setUser: "account/setUser",
       setUsernameEntry: "account/setUsernameEntry",
       setPassword: "account/setPasswordEntry",
+      setNoUsernameNeitherPassword: "account/setNoUsernameNeitherPassword",
     }),
 
     ...mapActions({
@@ -57,24 +65,42 @@ export default {
       verifyPassword: "account/verifyPassword",
       getUsers: "account/getUsers",
     }),
+
+    onIdentifyUser(value) {
+      if (value !== "") {
+        this.identifyUser();
+      }
+    },
+
+    onVerifyPassword(password) {
+      if (password !== "") {
+        this.verifyPassword();
+      }
+    },
   },
 };
 </script>
 <template>
   <div class="profile">
     <div class="box">
-      <img src="/avatars/avatar.jpg" alt="avatar" />
+      <img src="/avatars/genericAvatar.jpg" alt="avatar" />
       <label for="username">Username:</label>
-      <!-- $event.target.value
-        Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
-        Es cuando se le agrega un valor al inputl
-       -->
-      <input v-model="username" type="text" placeholder="Jane Smith" />
-      <span v-if="userNotFound">{{ "El usuario no fue encontrado" }}</span>
+      <input
+        v-model="username"
+        type="text"
+        placeholder="Jane Smith"
+        @blur="onIdentifyUser($event.target.value)"
+      />
+      <span v-if="userNotFound || noUsernameNeitherPassword">{{
+        "The username was not found."
+      }}</span>
       <label for="password">Password:</label>
       <input v-model="password" type="password" placeholder="............." />
+      <span v-if="passwordIncorrect || noUsernameNeitherPassword">{{
+        "The password was incorrect."
+      }}</span>
 
-      <button @click="verifyPassword(password)">Acceder</button>
+      <button @click="onVerifyPassword()">Acceder</button>
     </div>
   </div>
 </template>
@@ -101,5 +127,6 @@ export default {
 
 span {
   @apply text-red-500;
+  font-size: 0.8rem;
 }
 </style>

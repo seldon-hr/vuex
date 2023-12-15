@@ -6,6 +6,8 @@ export const SET_USERNAME_ENTRY = 'setUsernameEntry';
 export const SET_USER_LIST = 'setUserList';
 export const SET_USER = 'setUser';
 export const SET_USER_NOT_FOUND = 'setUserNotFound';
+export const SET_PASSWORD_INCORRECT = 'setPasswordIncorrect';
+export const SET_NO_USERNAME_NEITHER_PASSWORD = 'setNoUsernameNeitherPassword';
 
 
 //For profile module

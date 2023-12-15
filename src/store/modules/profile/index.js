@@ -1,18 +1,12 @@
 import { SET_AGE, SET_USERNAME } from '@/common/mutatition-types';
+import { appStorage } from '../../../helpers/appStorage';
+
+const _USER = appStorage.getUser();
 
 const profile = {
            namespaced: true,
            state: {
-               user: {
-                    username: "seldon",
-                    name: "Seldon",
-                    age: 0,
-                    email: "seldon@seldon",
-                    birth: "1998-12-12",
-                    password: "123456",
-                    status: "active",
-                    avatar: "/avatars/avatar.jpg",
-                },
+               user: _USER
            },
            getters: {
                getAge(state) {

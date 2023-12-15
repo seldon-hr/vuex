@@ -1,6 +1,7 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
+import { appStorage } from '../../../helpers/appStorage';
 
 const account = {
     namespaced: true,
@@ -11,7 +12,10 @@ const account = {
         userRequest: {},
         userList: [],
 
+        /* Rules */
         userNotFound: false,
+        passwordIncorrect: false,
+        noUsernameNeitherPassword: false,
     },
 
     getters: {
@@ -43,9 +47,17 @@ const account = {
         [SET_PASSWORD_ENTRY](state, passwordEntry) {
             state.userRequest.password = passwordEntry;
         },
+        // Rules
         [SET_USER_NOT_FOUND](state, userNotFound) {
             state.userNotFound = userNotFound;
-        }
+        },
+        [SET_PASSWORD_INCORRECT](state, value) {
+            state.passwordIncorrect = value;
+        },
+        [SET_NO_USERNAME_NEITHER_PASSWORD](state, value) {
+            state.noUsernameNeitherPassword = value;
+        },
+
     },
 
     actions: {
@@ -59,38 +71,65 @@ const account = {
                 if (userFind) {
                     /* 
                     * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
+                        contraseña y avatar temporales, posteriormente se agregarán cuando la petición llegue.
                      */
+
                     userFind.password = userFind.username;
                     userFind.avatar = "/avatars/avatar.jpg";
+                    userFind.birthDate = "1990-01-01";
+                    userFind.age = 0;
+                    userFind.status = "active";
                     
                     commit(SET_USER, userFind);
+                    /* commit(SET_USERNAME_ENTRY, userFind.username); */
                     /* Usuario encontrado */
                     commit(SET_USER_NOT_FOUND, false);
+                    commit(SET_NO_USERNAME_NEITHER_PASSWORD, false);
                 } else {
                     /* Usuario no encontrado */
+                    commit(SET_USERNAME_ENTRY, '');
                     commit(SET_USER_NOT_FOUND, true);
                 }  
             },    
 
     
-            verifyPassword({ state }) {
+        verifyPassword({ state, commit, dispatch },) {
+            if (!state.userRequest.username == '' || !state.userRequest.password == '' || !state.userRequest.username == undefined || !state.userRequest.password == undefined) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
 
                         const PASSWORD_USER = state.user.password;
                         const USERNAME_USER = state.user.username;
-                        console.log('Desde el módulo account, obeteniendo lo del profile', PASSWORD_USER, USERNAME_USER);
     
                         if (PASSWORD_USER == state.userRequest.password  && USERNAME_USER == state.userRequest.username) {
                             resolve(true);
+                            commit(SET_PASSWORD_INCORRECT, false);
+
+                            //Eliminar el usuarioRequest
+                            commit(SET_USER_REQUEST, {});
+
+                            //Asignar el usuario al storage
+                            dispatch('asignUserToStorage');
                             router.push('/')
                         } else {
                             reject(false);
-                            alert("Usuario o contraseña incorrectos");
+                            /* Contraseña incorrecta */
+                            commit(SET_PASSWORD_INCORRECT, true);
                         }
                     }, 1000);
                 });
-            },
+            }
+            else {
+                /* No hay usuario ni contraseña */
+                commit(SET_NO_USERNAME_NEITHER_PASSWORD, true);
+            }
+        },
+
+        asignUserToStorage({ state }) {
+            appStorage.setUser(state.user);
+        },
+
+
         },
     }
 
