@@ -28,6 +28,10 @@ export default {
       return this.account.passwordIncorrect;
     },
 
+    noUsernameNeitherPassword() {
+      return this.account.noUsernameNeitherPassword;
+    },
+
     username: {
       get() {
         return this.account.userRequest.username;
@@ -53,6 +57,7 @@ export default {
       setUser: "account/setUser",
       setUsernameEntry: "account/setUsernameEntry",
       setPassword: "account/setPasswordEntry",
+      setNoUsernameNeitherPassword: "account/setNoUsernameNeitherPassword",
     }),
 
     ...mapActions({
@@ -86,14 +91,16 @@ export default {
         placeholder="Jane Smith"
         @blur="onIdentifyUser($event.target.value)"
       />
-      <span v-if="userNotFound">{{ "The username was not found" }}</span>
+      <span v-if="userNotFound || noUsernameNeitherPassword">{{
+        "The username was not found."
+      }}</span>
       <label for="password">Password:</label>
       <input v-model="password" type="password" placeholder="............." />
-      <span v-if="passwordIncorrect">{{ "The password was incorrect" }}</span>
+      <span v-if="passwordIncorrect || noUsernameNeitherPassword">{{
+        "The password was incorrect."
+      }}</span>
 
-      <button :disabled="noUsernameNeitherPassword" @click="onVerifyPassword()">
-        Acceder
-      </button>
+      <button @click="onVerifyPassword()">Acceder</button>
     </div>
   </div>
 </template>

@@ -80,6 +80,7 @@ const account = {
                     /* commit(SET_USERNAME_ENTRY, userFind.username); */
                     /* Usuario encontrado */
                     commit(SET_USER_NOT_FOUND, false);
+                    commit(SET_NO_USERNAME_NEITHER_PASSWORD, false);
                 } else {
                     /* Usuario no encontrado */
                     commit(SET_USERNAME_ENTRY, '');
@@ -88,13 +89,13 @@ const account = {
             },    
 
     
-            verifyPassword({ state, commit },) {
+        verifyPassword({ state, commit },) {
+            if (!state.userRequest.username == '' || !state.userRequest.password == '' || !state.userRequest.username == undefined || !state.userRequest.password == undefined) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
 
                         const PASSWORD_USER = state.user.password;
                         const USERNAME_USER = state.user.username;
-                        console.log('Desde el módulo account, obeteniendo lo del profile', PASSWORD_USER, USERNAME_USER);
     
                         if (PASSWORD_USER == state.userRequest.password  && USERNAME_USER == state.userRequest.username) {
                             resolve(true);
@@ -110,7 +111,12 @@ const account = {
                         }
                     }, 1000);
                 });
-            },
+            }
+            else {
+                /* No hay usuario ni contraseña */
+                commit(SET_NO_USERNAME_NEITHER_PASSWORD, true);
+            }
+        },
         },
     }
 
