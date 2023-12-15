@@ -24,6 +24,10 @@ export default {
       return this.account.userNotFound;
     },
 
+    passwordIncorrect() {
+      return this.account.passwordIncorrect;
+    },
+
     username: {
       get() {
         return this.account.userRequest.username;
@@ -35,7 +39,7 @@ export default {
 
     password: {
       get() {
-        return this.password;
+        return this.account.userRequest.password;
       },
       set(value) {
         this.setPassword(value);
@@ -56,6 +60,18 @@ export default {
       verifyPassword: "account/verifyPassword",
       getUsers: "account/getUsers",
     }),
+
+    onIdentifyUser(value) {
+      if (value !== "") {
+        this.identifyUser();
+      }
+    },
+
+    onVerifyPassword(password) {
+      if (password !== "") {
+        this.verifyPassword();
+      }
+    },
   },
 };
 </script>
@@ -68,13 +84,16 @@ export default {
         v-model="username"
         type="text"
         placeholder="Jane Smith"
-        @blur="identifyUser()"
+        @blur="onIdentifyUser($event.target.value)"
       />
-      <span v-if="userNotFound">{{ "El usuario no fue encontrado" }}</span>
+      <span v-if="userNotFound">{{ "The username was not found" }}</span>
       <label for="password">Password:</label>
       <input v-model="password" type="password" placeholder="............." />
+      <span v-if="passwordIncorrect">{{ "The password was incorrect" }}</span>
 
-      <button @click="verifyPassword(password)">Acceder</button>
+      <button :disabled="noUsernameNeitherPassword" @click="onVerifyPassword()">
+        Acceder
+      </button>
     </div>
   </div>
 </template>

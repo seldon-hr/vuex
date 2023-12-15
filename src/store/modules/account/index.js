@@ -1,4 +1,4 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
 
@@ -11,7 +11,10 @@ const account = {
         userRequest: {},
         userList: [],
 
+        /* Rules */
         userNotFound: false,
+        passwordIncorrect: false,
+        noUsernameNeitherPassword: false,
     },
 
     getters: {
@@ -43,9 +46,17 @@ const account = {
         [SET_PASSWORD_ENTRY](state, passwordEntry) {
             state.userRequest.password = passwordEntry;
         },
+        // Rules
         [SET_USER_NOT_FOUND](state, userNotFound) {
             state.userNotFound = userNotFound;
-        }
+        },
+        [SET_PASSWORD_INCORRECT](state, value) {
+            state.passwordIncorrect = value;
+        },
+        [SET_NO_USERNAME_NEITHER_PASSWORD](state, value) {
+            state.noUsernameNeitherPassword = value;
+        },
+
     },
 
     actions: {
@@ -59,12 +70,14 @@ const account = {
                 if (userFind) {
                     /* 
                     * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
+                        contraseña y avatar temporales, posteriormente se agregarán cuando la petición llegue.
                      */
+
                     userFind.password = userFind.username;
                     userFind.avatar = "/avatars/avatar.jpg";
                     
                     commit(SET_USER, userFind);
-                    commit(SET_USERNAME_ENTRY, userFind.username);
+                    /* commit(SET_USERNAME_ENTRY, userFind.username); */
                     /* Usuario encontrado */
                     commit(SET_USER_NOT_FOUND, false);
                 } else {
@@ -75,7 +88,7 @@ const account = {
             },    
 
     
-            verifyPassword({ state }) {
+            verifyPassword({ state, commit },) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
 
@@ -85,10 +98,15 @@ const account = {
     
                         if (PASSWORD_USER == state.userRequest.password  && USERNAME_USER == state.userRequest.username) {
                             resolve(true);
+                            commit(SET_PASSWORD_INCORRECT, false);
+
+                            //Eliminar el usuarioRequest
+                            commit(SET_USER_REQUEST, {});
                             router.push('/')
                         } else {
                             reject(false);
-                            alert("Usuario o contraseña incorrectos");
+                            /* Contraseña incorrecta */
+                            commit(SET_PASSWORD_INCORRECT, true);
                         }
                     }, 1000);
                 });
