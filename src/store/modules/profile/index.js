@@ -23,14 +23,13 @@ const profile = {
            },
            actions: {
                calculateAge({ commit, state }) {
-                    const today = new Date();
-                    const birthDate = new Date(state.user.birth);
+                   const today = new Date();
+                   const birthDate = new Date(state.user.birthDate);
                     let age = today.getFullYear() - birthDate.getFullYear();
                     const month = today.getMonth() - birthDate.getMonth();
                     if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
                         age--;
                    }
-                   console.log(age);
                     commit(SET_AGE, age);
                 },
            },
