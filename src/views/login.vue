@@ -32,6 +32,10 @@ export default {
       return this.account.noUsernameNeitherPassword;
     },
 
+    avatar() {
+      return this.account.user.avatar;
+    },
+
     username: {
       get() {
         return this.account.userRequest.username;
@@ -83,7 +87,7 @@ export default {
 <template>
   <div class="profile">
     <div class="box">
-      <img src="/avatars/genericAvatar.jpg" alt="avatar" />
+      <img :src="avatarBase || avatarProfile" alt="avatar" />
       <label for="username">Username:</label>
       <input
         v-model="username"

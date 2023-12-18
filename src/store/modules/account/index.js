@@ -8,8 +8,14 @@ const account = {
     state: {
         password: "",
         username: "",
-        user: {},
-        userRequest: {},
+        user: {
+            //TODO: LLenar con imágnnes online para que se puedan obtener y asignar.
+            avatar: ".././avatars/avatar.jpg",
+        },
+        userRequest: {
+            username: "",
+            password: "",
+        },
         userList: [],
 
         /* Rules */
