@@ -5,6 +5,10 @@ export default {
     this.getUsers();
   },
 
+  data() {
+    return {};
+  },
+
   computed: {
     //Llamar al state de Vuex
     ...mapState({
@@ -32,7 +36,7 @@ export default {
       return this.account.noUsernameNeitherPassword;
     },
 
-    avatar() {
+    avatarProfile() {
       return this.account.user.avatar;
     },
 
@@ -87,7 +91,7 @@ export default {
 <template>
   <div class="profile">
     <div class="box">
-      <img :src="avatarBase || avatarProfile" alt="avatar" />
+      <img :src="avatarProfile" alt="avatar" />
       <label for="username">Username:</label>
       <input
         v-model="username"

@@ -2,16 +2,14 @@ import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERN
 import { gettingUsers } from '../../../api';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
+import User from '../../../models/account/user';
 
 const account = {
     namespaced: true,
     state: {
         password: "",
         username: "",
-        user: {
-            //TODO: LLenar con imágnnes online para que se puedan obtener y asignar.
-            avatar: ".././avatars/avatar.jpg",
-        },
+        user: new User(),
         userRequest: {
             username: "",
             password: "",
@@ -81,7 +79,7 @@ const account = {
                      */
 
                     userFind.password = userFind.username;
-                    userFind.avatar = "/avatars/avatar.jpg";
+                    userFind.avatar = "/public/avatars/avatar.jpg";
                     userFind.birthDate = "1990-01-01";
                     userFind.age = 0;
                     userFind.status = "active";
