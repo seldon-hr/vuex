@@ -17,11 +17,6 @@ export default {
   data() {
     return {
       search: "",
-      /* profile: {
-        username: "Diana Nerd",
-        status: "active",
-        avatar: "/avatars/avatar.jpg",
-      }, */
       channels: [
         { id: 1, name: "General", messages: 27 },
         { id: 2, name: "Emergencias", messages: null },
@@ -43,11 +38,6 @@ export default {
     },
 
     ...mapGetters(["getUsername"]),
-
-    /* username() {
-      //Acceder a la propiedad username del state
-      return this.$store.state.user.username;
-    }, */
   },
 
   methods: {
@@ -69,7 +59,9 @@ export default {
         :status="user.status"
       />
       <button @click="calculateAge()">Calculate Age</button>
-      <span style="display:inline;">Edad: {{ user.age == 0 ? ' ' : user.age }}</span>
+      <span style="display: inline"
+        >Edad: {{ user.age == 0 ? " " : user.age }}</span
+      >
       <RouterLink to="/" class="channels-title"
         >Canales <Icon icon="carbon:hashtag"
       /></RouterLink>

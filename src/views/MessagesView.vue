@@ -1,65 +1,120 @@
 <script>
-import MessageItem from '@/components/MessageItem.vue'
+import MessageItem from "@/components/MessageItem.vue";
 
 export default {
   components: {
-    MessageItem
+    MessageItem,
   },
   data() {
     return {
-      title: 'Nombre del canal',
+      title: "Nombre del canal",
       people: [
-        { id: 1, name: 'You', avatar: '/avatars/avatar.jpg' },
-        { id: 2, name: 'Jason', avatar: '/avatars/avatar-02.jpg' },
-        { id: 3, name: 'Janet', avatar: '/avatars/avatar-03.jpg' }
+        { id: 1, name: "You", avatar: "/avatars/avatar.jpg" },
+        { id: 2, name: "Hassabis", avatar: "/avatars/avatar-02.jpg" },
+        { id: 3, name: "Da Vinci", avatar: "/avatars/avatar-03.jpg" },
       ],
       messages: [
-        { id: 1, author: 1, message: 'Hola 👀', timestamp: new Date().toLocaleTimeString() },
-        { id: 2, author: 2, message: 'Holaaa!!!', timestamp: new Date().toLocaleTimeString() },
-        { id: 3, author: 3, message: 'Hola a todo el mundo 😊', timestamp: new Date().toLocaleTimeString() },
-        { id: 4, author: 3, message: '¿Cómo están?', timestamp: new Date().toLocaleTimeString() },
-        { id: 5, author: 1, message: 'Todo muy bien :D', timestamp: new Date().toLocaleTimeString() },
-        { id: 6, author: 2, message: 'Si, todo bien.', timestamp: new Date().toLocaleTimeString() },
-        { id: 7, author: 1, message: 'Oigan, les escribo para contarles algo... 😌', timestamp: new Date().toLocaleTimeString() },
-        { id: 8, author: 3, message: 'A vers 👀', timestamp: new Date().toLocaleTimeString() },
-        { id: 9, author: 2, message: 'Ahhhh!!', timestamp: new Date().toLocaleTimeString() },
-        { id: 10, author: 2, message: '¡Cuenta ese chismesito yaaaa!', timestamp: new Date().toLocaleTimeString() },
-        { id: 11, author: 1, message: 'Pues, ¡acabamos de lanzar los nuevos cursos de Vue.js!', timestamp: new Date().toLocaleTimeString() },        
-      ]
-    }
+        {
+          id: 1,
+          author: 1,
+          message: "Bro... 👀",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 2,
+          author: 2,
+          message: "¿Ahora que hiciste?, Cabro...!!!",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 3,
+          author: 3,
+          message: "Por eso lo despidieron la vez pasada",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 4,
+          author: 1,
+          message: "A ti que ni de aquí eres, no sé como estas aquí!",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 5,
+          author: 3,
+          message: "Bueno... ustedes me pideron estar aquí",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 6,
+          author: 2,
+          message: "Eso es cierto, Sam, bueno, ¿qué hiciste?",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 7,
+          author: 1,
+          message: "Oigan, les escribo para contarles algo... 😅😰",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 8,
+          author: 3,
+          message: "A vers 👀",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 9,
+          author: 1,
+          message: "Pues que al final, ¡Q si tiene consciencia!",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 10,
+          author: 2,
+          message: "😐!!",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 11,
+          author: 2,
+          message: "🫠🫤😵‍💫",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ],
+    };
   },
   computed: {
     messagesView() {
       return this.messages.map((message) => {
-        const author = this.people.find((p) => p.id === message.author)
+        const author = this.people.find((p) => p.id === message.author);
         if (!author) return message;
         return {
           ...message,
           author,
-          self: author.id === 1
-        }
-      })
-    }
+          self: author.id === 1,
+        };
+      });
+    },
   },
   watch: {
-    '$route.params.id': {
+    "$route.params.id": {
       immediate: true,
       handler() {
-        this.scrollToBottom()
-      }
-    }
+        this.scrollToBottom();
+      },
+    },
   },
   mounted() {
-    this.scrollToBottom()
+    this.scrollToBottom();
   },
   methods: {
     scrollToBottom() {
       this.$refs?.end?.scrollIntoView({
-          behavior: 'smooth'
-      })
-    }
+        behavior: "smooth",
+      });
+    },
   },
-}
+};
 </script>
 
 <template>
@@ -67,11 +122,7 @@ export default {
     <header>
       <h2>{{ title }}</h2>
       <div class="people-list">
-        <div
-          class="people-item"
-          v-for="p in people"
-          :key="p.id"
-        >
+        <div class="people-item" v-for="p in people" :key="p.id">
           <img :src="p.avatar" :alt="p.name" />
         </div>
       </div>
