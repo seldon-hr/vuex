@@ -69,22 +69,27 @@ const account = {
     actions: {
         async getUsers({ commit }) {
             const listUsers = await gettingUsers();
-            commit(SET_USER_LIST, listUsers);
-        }, ~
+
+            if (listUsers.length > 0) {
+                /* Lógica de procesamiento en la data */
+                listUsers.forEach((user, index) => {
+                    user.password = user.username;
+                    user.birthDate = "1990-01-01";
+                    user.age = 0;
+                    user.status = "active";
+                    user.avatar = "/public/avatars/avatar-" + index + ".jpg";
+                });
+
+
+                commit(SET_USER_LIST, listUsers);
+            } else {
+                alert("No hay usuarios");
+            }
+        }, 
         
         identifyUser({ commit, state }) {
             const userFind = state.userList.find(user => user.username == state.userRequest.username);
             if (userFind) {
-                /* 
-                * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
-                    contraseña y avatar temporales, posteriormente se agregarán cuando la petición llegue.
-                    */
-
-                userFind.password = userFind.username;
-                userFind.avatar = "/public/avatars/avatar.jpg";
-                userFind.birthDate = "1990-01-01";
-                userFind.age = 0;
-                userFind.status = "active";
                 
                 commit(SET_USER, userFind);
                 /* commit(SET_USERNAME_ENTRY, userFind.username); */

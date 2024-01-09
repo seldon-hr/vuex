@@ -17,11 +17,6 @@ export default {
   data() {
     return {
       search: "",
-      /* profile: {
-        username: "Diana Nerd",
-        status: "active",
-        avatar: "/avatars/avatar.jpg",
-      }, */
       channels: [
         { id: 1, name: "General", messages: 27 },
         { id: 2, name: "Emergencias", messages: null },
