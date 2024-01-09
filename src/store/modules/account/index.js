@@ -5,6 +5,8 @@ import { appStorage } from '../../../helpers/appStorage';
 import User from '../../../models/account/user';
 
 const account = {
+    /* Activa la propiedad de espacio de nombre, el cual permite que cuando uno quiere 
+       hacer uso de un method, mutatio o getter hace referencia al nomber del módulo. */
     namespaced: true,
     state: {
         password: "",
@@ -65,36 +67,36 @@ const account = {
     },
 
     actions: {
-            async getUsers({ commit }) {
-                const listUsers = await gettingUsers();
-                commit(SET_USER_LIST, listUsers);
-            },
+        async getUsers({ commit }) {
+            const listUsers = await gettingUsers();
+            commit(SET_USER_LIST, listUsers);
+        }, ~
         
-            identifyUser({ commit, state }) {
-                const userFind = state.userList.find(user => user.username == state.userRequest.username);
-                if (userFind) {
-                    /* 
-                    * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
-                        contraseña y avatar temporales, posteriormente se agregarán cuando la petición llegue.
-                     */
+        identifyUser({ commit, state }) {
+            const userFind = state.userList.find(user => user.username == state.userRequest.username);
+            if (userFind) {
+                /* 
+                * //TODO: Data que se va a procesar cuando esta llegue de la petición. 
+                    contraseña y avatar temporales, posteriormente se agregarán cuando la petición llegue.
+                    */
 
-                    userFind.password = userFind.username;
-                    userFind.avatar = "/public/avatars/avatar.jpg";
-                    userFind.birthDate = "1990-01-01";
-                    userFind.age = 0;
-                    userFind.status = "active";
-                    
-                    commit(SET_USER, userFind);
-                    /* commit(SET_USERNAME_ENTRY, userFind.username); */
-                    /* Usuario encontrado */
-                    commit(SET_USER_NOT_FOUND, false);
-                    commit(SET_NO_USERNAME_NEITHER_PASSWORD, false);
-                } else {
-                    /* Usuario no encontrado */
-                    commit(SET_USERNAME_ENTRY, '');
-                    commit(SET_USER_NOT_FOUND, true);
-                }  
-            },    
+                userFind.password = userFind.username;
+                userFind.avatar = "/public/avatars/avatar.jpg";
+                userFind.birthDate = "1990-01-01";
+                userFind.age = 0;
+                userFind.status = "active";
+                
+                commit(SET_USER, userFind);
+                /* commit(SET_USERNAME_ENTRY, userFind.username); */
+                /* Usuario encontrado */
+                commit(SET_USER_NOT_FOUND, false);
+                commit(SET_NO_USERNAME_NEITHER_PASSWORD, false);
+            } else {
+                /* Usuario no encontrado */
+                commit(SET_USERNAME_ENTRY, '');
+                commit(SET_USER_NOT_FOUND, true);
+            }  
+        },    
 
     
         verifyPassword({ state, commit, dispatch },) {

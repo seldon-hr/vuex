@@ -43,11 +43,6 @@ export default {
     },
 
     ...mapGetters(["getUsername"]),
-
-    /* username() {
-      //Acceder a la propiedad username del state
-      return this.$store.state.user.username;
-    }, */
   },
 
   methods: {
@@ -69,7 +64,9 @@ export default {
         :status="user.status"
       />
       <button @click="calculateAge()">Calculate Age</button>
-      <span style="display:inline;">Edad: {{ user.age == 0 ? ' ' : user.age }}</span>
+      <span style="display: inline"
+        >Edad: {{ user.age == 0 ? " " : user.age }}</span
+      >
       <RouterLink to="/" class="channels-title"
         >Canales <Icon icon="carbon:hashtag"
       /></RouterLink>
