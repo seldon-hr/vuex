@@ -24,6 +24,9 @@ export default {
         { id: 4, name: "Proyecto 1", messages: 24 },
         { id: 5, name: "Non-work", messages: null },
         { id: 6, name: "Atención a clientes", messages: 120 },
+        { id: 7, name: "Q Asistencia", messages: 12 },
+        { id: 8, name: "Insignia", messages: 0 },
+        { id: 9, name: "OPL", messages: 0 },
       ],
     };
   },
