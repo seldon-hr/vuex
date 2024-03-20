@@ -12,6 +12,10 @@ export default {
         { id: 1, name: "You", avatar: "/avatars/avatar-0.jpg" },
         { id: 2, name: "Hassabis", avatar: "/avatars/avatar-2.jpg" },
         { id: 3, name: "Du Rove", avatar: "/avatars/avatar-1.jpg" },
+        { id: 4, name: "Sopolsky", avatar: "/avatars/avatar-5.jpg" },
+        { id: 5, name: "Sagan", avatar: "/avatars/avatar-4.jpg" },
+        { id: 6, name: "Yuval", avatar: "/avatars/avatar-10.jpg" },
+        { id: 7, name: "Hubberman", avatar: "/avatars/avatar-6.jpg" },
       ],
       messages: [
         {
@@ -84,6 +88,30 @@ export default {
           id: 12,
           author: 3,
           message: "🫠😵‍💫",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 13,
+          author: 4,
+          message: "¿Qué? ¿Cómo es eso posible?",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 14,
+          author: 5,
+          message: "Esto cambia todo...",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 15,
+          author: 6,
+          message: "Necesitamos discutir esto más a fondo.",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+        {
+          id: 16,
+          author: 7,
+          message: "Estoy de acuerdo, esto es un gran descubrimiento.",
           timestamp: new Date().toLocaleTimeString(),
         },
       ],
