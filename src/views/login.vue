@@ -54,7 +54,7 @@ export default {
         return this.account.userRequest.password;
       },
       set(value) {
-        this.setPassword(value);
+        this.setPasswordEntry(value);
       },
     },
 
@@ -64,7 +64,7 @@ export default {
     ...mapMutations({
       setUser: "account/setUser",
       setUsernameEntry: "account/setUsernameEntry",
-      setPassword: "account/setPasswordEntry",
+      setPasswordEntry: "account/setPasswordEntry",
       setNoUsernameNeitherPassword: "account/setNoUsernameNeitherPassword",
     }),
 
@@ -72,6 +72,7 @@ export default {
       identifyUser: "account/identifyUser",
       verifyPassword: "account/verifyPassword",
       getUsers: "account/getUsers",
+      resetUser: "account/resetUser",
     }),
 
     onIdentifyUser(value) {
@@ -83,6 +84,14 @@ export default {
     onVerifyPassword(password) {
       if (password !== "") {
         this.verifyPassword();
+      }
+    },
+  },
+
+  watch: {
+    username(value) {
+      if (value === "") {
+        this.resetUser();
       }
     },
   },

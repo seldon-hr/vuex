@@ -16,7 +16,7 @@ const account = {
             username: "",
             password: "",
         },
-        userList: [],
+        usersList: [],
 
         /* Rules */
         userNotFound: false,
@@ -35,8 +35,8 @@ const account = {
     },
 
     mutations: {
-        [SET_USER_LIST](state, userList) {
-            state.userList = userList;
+        [SET_USER_LIST](state, usersList) {
+            state.usersList = usersList;
         },
         [COMMIT_UPDATE_USERNAME](state, newUsername) {
             state.username = newUsername;
@@ -67,28 +67,32 @@ const account = {
     },
 
     actions: {
-        async getUsers({ commit }) {
+        async getUsers({ commit, dispatch }) {
             const listUsers = await gettingUsers();
 
             if (listUsers.length > 0) {
-                /* Lógica de procesamiento en la data */
-                listUsers.forEach((user, index) => {
-                    user.password = user.username;
-                    user.birthDate = "1990-01-01";
-                    user.age = 0;
-                    user.status = "active";
-                    user.avatar = "/public/avatars/avatar-" + index + ".jpg";
-                });
-
-
                 commit(SET_USER_LIST, listUsers);
+                dispatch('processUsers');
             } else {
                 alert("No hay usuarios");
             }
         }, 
+
+        processUsers({ commit, state}) {
+            const listUsers =state.usersList;
+            listUsers.forEach((user, index) => {
+                console.log(user);
+                user.password = user.username;
+                user.birthDate = "1990-01-01";
+                user.age = 0;
+                user.status = "active";
+                user.avatar = "/public/avatars/avatar-" + index + ".jpg";
+            });
+            commit(SET_USER_LIST, listUsers);
+        },
         
         identifyUser({ commit, state }) {
-            const userFind = state.userList.find(user => user.username == state.userRequest.username);
+            const userFind = state.usersList.find(user => user.username == state.userRequest.username);
             if (userFind) {
                 
                 commit(SET_USER, userFind);
@@ -98,10 +102,15 @@ const account = {
                 commit(SET_NO_USERNAME_NEITHER_PASSWORD, false);
             } else {
                 /* Usuario no encontrado */
+                commit(SET_USER, new User());
                 commit(SET_USERNAME_ENTRY, '');
                 commit(SET_USER_NOT_FOUND, true);
             }  
         },    
+
+        resetUser({ commit }) {
+            commit(SET_USER, new User());
+        },
 
     
         verifyPassword({ state, commit, dispatch },) {
