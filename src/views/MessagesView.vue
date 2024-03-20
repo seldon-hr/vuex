@@ -7,11 +7,11 @@ export default {
   },
   data() {
     return {
-      title: "Nombre del canal",
+      title: "Status",
       people: [
-        { id: 1, name: "You", avatar: "/avatars/avatar.jpg" },
-        { id: 2, name: "Hassabis", avatar: "/avatars/avatar-02.jpg" },
-        { id: 3, name: "Da Vinci", avatar: "/avatars/avatar-03.jpg" },
+        { id: 1, name: "You", avatar: "/avatars/avatar-0.jpg" },
+        { id: 2, name: "Hassabis", avatar: "/avatars/avatar-2.jpg" },
+        { id: 3, name: "Du Rove", avatar: "/avatars/avatar-1.jpg" },
       ],
       messages: [
         {
@@ -35,7 +35,7 @@ export default {
         {
           id: 4,
           author: 1,
-          message: "A ti que ni de aquí eres, no sé como estas aquí!",
+          message: "A ti que, ni de aquí eres, no sé como estas aquí!",
           timestamp: new Date().toLocaleTimeString(),
         },
         {
@@ -80,7 +80,14 @@ export default {
           message: "🫠🫤😵‍💫",
           timestamp: new Date().toLocaleTimeString(),
         },
+        {
+          id: 12,
+          author: 3,
+          message: "🫠😵‍💫",
+          timestamp: new Date().toLocaleTimeString(),
+        },
       ],
+      textMessage: "",
     };
   },
   computed: {
@@ -113,6 +120,16 @@ export default {
         behavior: "smooth",
       });
     },
+
+    newMessage() {
+      let message = {
+        id: this.messages.length + 1,
+        author: 1,
+        message: this.textMessage,
+        timestamp: new Date().toLocaleTimeString(),
+      };
+      this.messages.push(message);
+    },
   },
 };
 </script>
@@ -140,8 +157,8 @@ export default {
       <span ref="end"></span>
     </div>
     <footer>
-      <textarea rows="3"></textarea>
-      <button>
+      <textarea v-model="textMessage" rows="3"></textarea>
+      <button @click="newMessage()">
         <Icon icon="carbon:send-alt" />
       </button>
     </footer>
