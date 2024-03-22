@@ -44,7 +44,15 @@ const module = {
                     read: false,
                     channelId: 2,
                 },
-                // ... add more messages for other channels
+                // Add more messages for channelId 3 & 4
+                {
+                    id: 19,
+                    author: 2,
+                    message: "Starting a new channel 3 message",
+                    timestamp: new Date().toLocaleTimeString(),
+                    read: false,
+                    channelId: 3,
+                },
             ],
         } 
     },
