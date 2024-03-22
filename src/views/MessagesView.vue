@@ -1,5 +1,6 @@
 <script>
 import MessageItem from "@/components/MessageItem.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -8,6 +9,7 @@ export default {
   data() {
     return {
       title: "Status",
+      channelId: null,
       people: [
         { id: 1, name: "You", avatar: "/avatars/avatar-0.jpg" },
         { id: 2, name: "Hassabis", avatar: "/avatars/avatar-2.jpg" },
@@ -17,110 +19,15 @@ export default {
         { id: 6, name: "Yuval", avatar: "/avatars/avatar-10.jpg" },
         { id: 7, name: "Hubberman", avatar: "/avatars/avatar-6.jpg" },
       ],
-      messages: [
-        {
-          id: 1,
-          author: 1,
-          message: "Bro... 👀",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 2,
-          author: 2,
-          message: "¿Ahora que hiciste?, Cabro...!!!",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 3,
-          author: 3,
-          message: "Por eso lo despidieron la vez pasada",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 4,
-          author: 1,
-          message: "A ti que, ni de aquí eres, no sé como estas aquí!",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 5,
-          author: 3,
-          message: "Bueno... ustedes me pideron estar aquí",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 6,
-          author: 2,
-          message: "Eso es cierto, Sam, bueno, ¿qué hiciste?",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 7,
-          author: 1,
-          message: "Oigan, les escribo para contarles algo... 😅😰",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 8,
-          author: 3,
-          message: "A vers 👀",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 9,
-          author: 1,
-          message: "Pues que al final, ¡Q si tiene consciencia!",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 10,
-          author: 2,
-          message: "😐!!",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 11,
-          author: 2,
-          message: "🫠🫤😵‍💫",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 12,
-          author: 3,
-          message: "🫠😵‍💫",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 13,
-          author: 4,
-          message: "¿Qué? ¿Cómo es eso posible?",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 14,
-          author: 5,
-          message: "Esto cambia todo...",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 15,
-          author: 6,
-          message: "Necesitamos discutir esto más a fondo.",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-        {
-          id: 16,
-          author: 7,
-          message: "Estoy de acuerdo, esto es un gran descubrimiento.",
-          timestamp: new Date().toLocaleTimeString(),
-        },
-      ],
       textMessage: "",
     };
   },
   computed: {
+    /* Las computadas son reactivas, se basan en que si hay un cambio estas deberían cambiar al detectar un cambio de valor */
+    ...mapGetters("messages", ["getMessages"]),
+
     messagesView() {
-      return this.messages.map((message) => {
+      return this.getMessages(this.channelId)?.map((message) => {
         const author = this.people.find((p) => p.id === message.author);
         if (!author) return message;
         return {
@@ -132,9 +39,11 @@ export default {
     },
   },
   watch: {
+    /* Dentro del router vienen como string, cuando son parámetros */
     "$route.params.id": {
       immediate: true,
-      handler() {
+      handler(id) {
+        this.channelId = id;
         this.scrollToBottom();
       },
     },

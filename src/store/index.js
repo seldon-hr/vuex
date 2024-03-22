@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 import profile from './modules/profile/index.js';
 import account from './modules/account/index.js';
 import channels from './modules/channels/index.js';
+import messages  from './modules/messages/index.js';
 
 const store = createStore({
 
@@ -10,6 +11,7 @@ const store = createStore({
         //Aqui se importan los modulos
         account,
         channels,
+        messages,
         profile,
     },
 })
