@@ -31,7 +31,7 @@ const module = {
                 {
                     id: 17,
                     author: 1,
-                    message: "New message for channel 2",
+                    message: "Time to add more messages for channel 2",
                     timestamp: new Date().toLocaleTimeString(),
                     read: false,
                     channelId: 2,
@@ -39,7 +39,7 @@ const module = {
                 {
                     id: 18,
                     author: 2,
-                    message: "Another message for channel 2",
+                    message: "Totally agree! Let's do it!",
                     timestamp: new Date().toLocaleTimeString(),
                     read: false,
                     channelId: 2,
@@ -48,7 +48,7 @@ const module = {
                 {
                     id: 19,
                     author: 2,
-                    message: "Starting a new channel 3 message",
+                    message: "Greetings! 🚀",
                     timestamp: new Date().toLocaleTimeString(),
                     read: false,
                     channelId: 3,

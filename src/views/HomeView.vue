@@ -31,6 +31,10 @@ export default {
     };
   },
 
+  created() {
+    this.getUser();
+  },
+
   computed: {
     ...mapState({
       profile: "profile",
@@ -48,6 +52,7 @@ export default {
     /* Llamando método desde un solo archivo. */
     ...mapActions({
       calculateAge: "profile/calculateAge",
+      getUser: "profile/getUser",
     }),
   },
 };
