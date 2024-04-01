@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['avatar', 'author', 'time', 'message', 'is-self'])
+defineProps(["avatar", "author", "time", "message", "is-self"]);
 </script>
 
 <template>

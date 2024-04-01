@@ -17,31 +17,18 @@ export default {
   data() {
     return {
       search: "",
-      channels: [
-        { id: 1, name: "General", messages: 27 },
-        { id: 2, name: "Emergencias", messages: null },
-        { id: 3, name: "Anuncios", messages: 2 },
-        { id: 4, name: "Proyecto 1", messages: 24 },
-        { id: 5, name: "Non-work", messages: null },
-        { id: 6, name: "Atención a clientes", messages: 120 },
-        { id: 7, name: "Q Asistencia", messages: 12 },
-        { id: 8, name: "Insignia", messages: 0 },
-        { id: 9, name: "OPL", messages: 0 },
-      ],
     };
   },
 
-  created() {
-    this.getUser();
-  },
+  created() {},
 
   computed: {
     ...mapState({
-      profile: "profile",
+      account: "account",
     }),
 
     user() {
-      return this.profile.user;
+      return this.account.user;
     },
 
     ...mapGetters(["getUsername"]),
@@ -51,8 +38,8 @@ export default {
   methods: {
     /* Llamando método desde un solo archivo. */
     ...mapActions({
-      calculateAge: "profile/calculateAge",
-      getUser: "profile/getUser",
+      calculateAge: "account/calculateAge",
+      /* orderUser: "account/orderUser", */
     }),
   },
 };

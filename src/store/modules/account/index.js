@@ -1,4 +1,4 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD, SET_AGE} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
@@ -32,6 +32,9 @@ const account = {
             /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
             return state.username.split("").join("");
         },
+        getAge(state) {
+            return state.user.age;
+        },
     },
 
     mutations: {
@@ -52,6 +55,9 @@ const account = {
         },
         [SET_PASSWORD_ENTRY](state, passwordEntry) {
             state.userRequest.password = passwordEntry;
+        },
+        [SET_AGE](state, age) {
+            state.user.age = age;
         },
         // Rules
         [SET_USER_NOT_FOUND](state, userNotFound) {
@@ -130,6 +136,9 @@ const account = {
 
                             //Asignar el usuario al storage
                             dispatch('asignUserToStorage');
+                            dispatch('orderUser');
+
+                            //Acceder a home.
                             router.push('/')
                         } else {
                             reject(false);
@@ -147,6 +156,28 @@ const account = {
 
         asignUserToStorage({ state }) {
             appStorage.setUser(state.user);
+        },
+
+                orderUser({ commit, state }) {
+                    let user = state.user;
+                    const usersList = state.usersList;
+                    const userIndex = usersList.findIndex((u) => u.username === user.username);
+                    if (userIndex > -1) {
+                        usersList.splice(userIndex, 1);
+                        usersList.unshift(user);
+                        commit(SET_USER_LIST, usersList);
+                    }
+                },
+
+        calculateAge({ commit, state }) {
+            const today = new Date();
+            const birthDate = new Date(state.user.birthDate);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            commit(SET_AGE, age);
         },
 
 

@@ -1,6 +1,6 @@
 <script>
 import MessageItem from "@/components/MessageItem.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   components: {
@@ -23,17 +23,30 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      account: "account",
+    }),
+
+    user() {
+      return this.account.user;
+    },
+
+    listUsers() {
+      return this.account.usersList;
+    },
     /* Las computadas son reactivas, se basan en que si hay un cambio estas deberían cambiar al detectar un cambio de valor */
     ...mapGetters("messages", ["getMessages"]),
 
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
-        const author = this.people.find((p) => p.id === message.author);
+        const author = this.listUsers.find((p) => p.id === message.author);
+        console.log(author);
         if (!author) return message;
         return {
           ...message,
           author,
-          self: author.id === 1,
+          // Si el autor del mensaje es igual al usuario actual, darle la clase self
+          self: author.id === this.user.id,
         };
       });
     },
@@ -76,7 +89,7 @@ export default {
     <header>
       <h2>{{ title }}</h2>
       <div class="people-list">
-        <div class="people-item" v-for="p in people" :key="p.id">
+        <div class="people-item" v-for="p in listUsers" :key="p.id">
           <img :src="p.avatar" :alt="p.name" />
         </div>
       </div>
