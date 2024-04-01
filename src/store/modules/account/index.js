@@ -87,7 +87,6 @@ const account = {
         processUsers({ commit, state}) {
             const listUsers =state.usersList;
             listUsers.forEach((user, index) => {
-                console.log(user);
                 user.password = user.username;
                 user.birthDate = "1990-01-01";
                 user.age = 0;

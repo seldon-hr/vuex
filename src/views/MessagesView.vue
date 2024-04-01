@@ -40,7 +40,6 @@ export default {
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
         const author = this.listUsers.find((p) => p.id === message.author);
-        console.log(author);
         if (!author) return message;
         return {
           ...message,
