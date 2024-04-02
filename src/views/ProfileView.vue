@@ -1,38 +1,38 @@
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
-
   computed: {
     ...mapState({
-      user: state => state.profile.user,
+      user: (state) => state.account.user,
     }),
 
-    ...mapGetters(['getUsername']),
+    ...mapGetters(["getUsername"]),
   },
   methods: {
     ...mapMutations({
-      setUsername: "profile/setUsername",
+      setUsername: "account/setUsername",
     }),
 
     ...mapActions({
       calculateAge: "profile/calculateAge",
     }),
   },
-}
+};
 </script>
 <template>
   <div class="profile">
     <div class="box">
-      <img src="/avatars/avatar.jpg" alt="avatar" />
+      <img :src="user.avatar" alt="avatar" />
       <label for="username">Nombre de usuario</label>
       <!-- $event.target.value
         Es una propiedad que nos da Vue para acceder al valor del input y se dispara con su valor.
        -->
-      <input 
-      type="text" 
-      placeholder="Jane Smith" 
-      :value="user.username" 
-      @input="setUsername($event.target.value)"/>
+      <input
+        type="text"
+        placeholder="Jane Smith"
+        :value="user.username"
+        @input="setUsername($event.target.value)"
+      />
       <!-- 
       De esta forma se llama sin la necesidad de usar mapMutations, pero no es recomendable.
       @input="$store.commit('setUsername',$event.target.value)"

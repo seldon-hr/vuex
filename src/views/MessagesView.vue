@@ -42,6 +42,7 @@ export default {
         return this.getMessages(this.channelId);
       },
       set(value) {
+        /* TODO: Actualizar el mensaje bajo método del store, no en la vista. */
         this.$store.commit("messages/setMessages", {
           channelId: this.channelId,
           messages: value,

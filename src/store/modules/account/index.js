@@ -1,4 +1,4 @@
-import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD, SET_AGE} from '@/common/mutatition-types';
+import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD, SET_AGE, SET_USERNAME} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
@@ -43,6 +43,9 @@ const account = {
         },
         [COMMIT_UPDATE_USERNAME](state, newUsername) {
             state.username = newUsername;
+        },
+        [SET_USERNAME](state, age) {
+            state.user.username = age;
         },
         [SET_USER_REQUEST](state, userRequest) {
             state.userRequest = userRequest;
