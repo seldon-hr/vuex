@@ -37,6 +37,18 @@ export default {
     /* Las computadas son reactivas, se basan en que si hay un cambio estas deberían cambiar al detectar un cambio de valor */
     ...mapGetters("messages", ["getMessages"]),
 
+    messages: {
+      get() {
+        return this.getMessages(this.channelId);
+      },
+      set(value) {
+        this.$store.commit("messages/setMessages", {
+          channelId: this.channelId,
+          messages: value,
+        });
+      },
+    },
+
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
         const author = this.listUsers.find((p) => p.id === message.author);
