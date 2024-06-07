@@ -8,7 +8,7 @@ export default {
   },
   data() {
     return {
-      title: "Status",
+      /* title: "Status", */
       channelId: null,
       people: [
         { id: 1, name: "You", avatar: "/avatars/avatar-0.jpg" },
@@ -25,7 +25,19 @@ export default {
   computed: {
     ...mapState({
       account: "account",
+      channelsState: "channels",
     }),
+
+    channels() {
+      return this.channelsState.channels;
+    },
+
+    title() {
+      const channel = this.channels.find(
+        (channel) => channel.id === parseInt(this.channelId)
+      );
+      return channel ? channel.name : "Status";
+    },
 
     user() {
       return this.account.user;

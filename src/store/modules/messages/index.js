@@ -59,7 +59,9 @@ const module = {
 
 
     getters: {
-        getMessages: (state)  => (channelId) => {
+        getMessages: (state) => (channelId) => {
+            /* Al usuar v-router, cuando usamos un param, este siempre va a a venir en string
+                y como nuestra propiedad de channelId como entero, entonces, tenemos que transformar en Int. */
             return state.messages.filter((message) => message.channelId === parseInt(channelId));
         },
     },
