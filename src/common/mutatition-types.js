@@ -13,3 +13,7 @@ export const SET_NO_USERNAME_NEITHER_PASSWORD = 'setNoUsernameNeitherPassword';
 //For profile module
 export const SET_USERNAME = 'setUsername';
 export const SET_AGE = 'setAge';
+
+
+//For messages module
+export const SET_MESSAGES = 'setMessages';

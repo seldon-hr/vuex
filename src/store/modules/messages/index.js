@@ -1,4 +1,7 @@
-const module = {
+import Message from '../../../models/message/message';
+import { SET_MESSAGES } from '@/common/mutatition-types';
+
+const messages = {
     namespaced: true,
     state() {
         return {
@@ -54,7 +57,30 @@ const module = {
                     channelId: 3,
                 },
             ],
+            message: new Message(),
         } 
+    },
+
+    actions: {
+        newMessage({ state }, message) {
+            state.message = new Message (message) ;
+            state.messages.push(state.message);
+            console.log(state.messages);
+        },
+
+        updateMesages({ commit}, messages) {
+            commit(SET_MESSAGES, messages);
+        },
+
+        updateMesage({ commit }, message) {
+            const messages = state.messages.map((m) => {
+                if (m.id === message.id) {
+                    return message;
+                }
+                return m;
+            });
+            commit(SET_MESSAGES, messages);
+        },
     },
 
 
@@ -67,10 +93,10 @@ const module = {
     },
 
     mutations: {
-        setMessages(state, messages) {
+        [SET_MESSAGES](state, messages) {
             state.messages = messages;
         },
     },
 }
 
-export default module
+export default messages

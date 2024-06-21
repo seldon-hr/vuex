@@ -1,6 +1,7 @@
 <script>
 import MessageItem from "@/components/MessageItem.vue";
 import { mapGetters, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -62,6 +63,15 @@ export default {
       },
     },
 
+    message: {
+      get() {
+        return this.messages.message;
+      },
+      set(value) {
+        updateMessage(value);
+      },
+    },
+
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
         const author = this.listUsers.find((p) => p.id === message.author);
@@ -89,20 +99,28 @@ export default {
     this.scrollToBottom();
   },
   methods: {
+    ...mapActions({
+      updateMessage: "messages/updateMessage",
+      newMessage: "messages/newMessage",
+    }),
+
     scrollToBottom() {
       this.$refs?.end?.scrollIntoView({
         behavior: "smooth",
       });
     },
 
-    newMessage() {
+    sendMessage() {
       let message = {
         id: this.messages.length + 1,
         author: 1,
         message: this.textMessage,
-        timestamp: new Date().toLocaleTimeString(),
+        timestamp: "",
+        channelId: this.channelId,
       };
-      this.messages.push(message);
+      console.log(this.textMessage);
+      this.newMessage(message);
+      this.textMessage = "";
     },
   },
 };
@@ -132,7 +150,7 @@ export default {
     </div>
     <footer>
       <textarea v-model="textMessage" rows="3"></textarea>
-      <button @click="newMessage()">
+      <button @click="sendMessage()">
         <Icon icon="carbon:send-alt" />
       </button>
     </footer>
