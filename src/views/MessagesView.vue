@@ -111,16 +111,25 @@ export default {
     },
 
     sendMessage() {
+      if (this.textMessage == "") return;
+
       let message = {
         id: this.messages.length + 1,
-        author: 1,
+        author: this.user.id,
         message: this.textMessage,
-        timestamp: "",
+        timestamp: new Date().toLocaleTimeString(),
         channelId: this.channelId,
       };
-      console.log(this.textMessage);
       this.newMessage(message);
       this.textMessage = "";
+      this.scrollToBottom();
+    },
+
+    handleEnterKey(event) {
+      if (this.textMessage.trim() !== "") {
+        this.sendMessage();
+      }
+      event.preventDefault(); // Prevenir la acción por defecto de la tecla Enter
     },
   },
 };
@@ -149,7 +158,12 @@ export default {
       <span ref="end"></span>
     </div>
     <footer>
-      <textarea v-model="textMessage" rows="3"></textarea>
+      <textarea
+        v-model="textMessage"
+        rows="3"
+        @keyup.enter.exact="handleEnterKey"
+        @keyup.enter.shift="insertNewLine"
+      ></textarea>
       <button @click="sendMessage()">
         <Icon icon="carbon:send-alt" />
       </button>

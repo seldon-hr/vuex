@@ -65,7 +65,6 @@ const messages = {
         newMessage({ state }, message) {
             state.message = new Message (message) ;
             state.messages.push(state.message);
-            console.log(state.messages);
         },
 
         updateMesages({ commit}, messages) {
