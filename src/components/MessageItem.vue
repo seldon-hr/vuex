@@ -1,5 +1,5 @@
 <script setup>
-defineProps(["avatar", "author", "time", "message", "is-self"]);
+defineProps(["avatar", "author", "time", "message", "isSelf"]);
 </script>
 
 <template>
@@ -44,6 +44,8 @@ defineProps(["avatar", "author", "time", "message", "is-self"]);
     }
     .message {
       @apply px-4 py-2 max-w-md rounded-2xl rounded-tl-none bg-zinc-800;
+      white-space: pre-wrap;
+      word-wrap: break-word;
       &.self {
         @apply rounded-tl-2xl rounded-tr-none;
       }
