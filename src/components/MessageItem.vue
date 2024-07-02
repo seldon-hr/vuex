@@ -44,6 +44,7 @@ defineProps(["avatar", "author", "time", "message", "isSelf"]);
     }
     .message {
       @apply px-4 py-2 max-w-md rounded-2xl rounded-tl-none bg-zinc-800;
+      /*Espaciado dentro del formateo de los mensajes. */
       white-space: pre-wrap;
       word-wrap: break-word;
       &.self {
