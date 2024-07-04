@@ -89,6 +89,10 @@ const messages = {
                 y como nuestra propiedad de channelId como entero, entonces, tenemos que transformar en Int. */
             return state.messages.filter((message) => message.channelId === parseInt(channelId));
         },
+
+        getUnreadMessages: (state, getters) => (channelId) => {
+           return getters.getMessages(channelId).filter((message) => !message.read).length; 
+        },
     },
 
     mutations: {

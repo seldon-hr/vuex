@@ -1,6 +1,5 @@
 const module = {
     namespaced: true,
-
     state: {
         channels: [
             {
@@ -28,14 +27,28 @@ const module = {
     },
 
     getters: {
-        getChannels: (state) => (search) => {
-            return state.channels.filter((channel) => channel.name.toLowerCase().includes(search.toLowerCase()));
+        getChannels: (state, getters, rootState, rootGetters) => (search) => {
+            return state.channels
+                .filter(
+                    (channel) => channel.name
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                )
+                .map((channel) => {
+                    const messages = rootGetters["messages/getMessages"](channel.id);
+                    return {
+                        ...channel,
+                        messages,
+                    };
+                });    
         },
-        getCurrentChannel(state) {
+        getCurrentChannel: (state) => {
             return state.currentChannel;
         },
+       
     },
 
+    
     mutations: {
         setChannels(state, channels) {
             state.channels = channels;
@@ -53,6 +66,7 @@ const module = {
             commit("setCurrentChannel", currentChannel);
         },
     },
-}
 
-export default module
+};
+
+export default module;
