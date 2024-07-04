@@ -30,7 +30,6 @@ const messages = {
                     read: false,
                     channelId: 1,
                 },
-                // ... rest of the messages for channelId 1
                 {
                     id: 17,
                     author: 1,
@@ -47,7 +46,6 @@ const messages = {
                     read: false,
                     channelId: 2,
                 },
-                // Add more messages for channelId 3 & 4
                 {
                     id: 19,
                     author: 2,
@@ -60,7 +58,6 @@ const messages = {
             message: new Message(),
         } 
     },
-
     actions: {
         newMessage({ state }, message) {
             state.message = new Message (message) ;
@@ -81,12 +78,8 @@ const messages = {
             commit(SET_MESSAGES, messages);
         },
     },
-
-
     getters: {
         getMessages: (state) => (channelId) => {
-            /* Al usuar v-router, cuando usamos un param, este siempre va a a venir en string
-                y como nuestra propiedad de channelId como entero, entonces, tenemos que transformar en Int. */
             return state.messages.filter((message) => message.channelId === parseInt(channelId));
         },
 
@@ -94,7 +87,6 @@ const messages = {
            return getters.getMessages(channelId).filter((message) => !message.read).length; 
         },
     },
-
     mutations: {
         [SET_MESSAGES](state, messages) {
             state.messages = messages;

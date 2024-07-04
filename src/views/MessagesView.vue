@@ -11,15 +11,6 @@ export default {
     return {
       /* title: "Status", */
       channelId: null,
-      people: [
-        { id: 1, name: "You", avatar: "/avatars/avatar-0.jpg" },
-        { id: 2, name: "Hassabis", avatar: "/avatars/avatar-2.jpg" },
-        { id: 3, name: "Du Rove", avatar: "/avatars/avatar-1.jpg" },
-        { id: 4, name: "Sopolsky", avatar: "/avatars/avatar-5.jpg" },
-        { id: 5, name: "Sagan", avatar: "/avatars/avatar-4.jpg" },
-        { id: 6, name: "Yuval", avatar: "/avatars/avatar-10.jpg" },
-        { id: 7, name: "Hubberman", avatar: "/avatars/avatar-6.jpg" },
-      ],
       textMessage: "",
     };
   },
@@ -28,6 +19,8 @@ export default {
       account: "account",
       channelsState: "channels",
     }),
+
+    ...mapGetters("contacts", ["getContacts", "getContactsByID"]),
 
     channels() {
       return this.channelsState.channels;
@@ -74,7 +67,7 @@ export default {
 
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
-        const author = this.listUsers.find((p) => p.id === message.author);
+        const author = this.getContacts.find((p) => p.id === message.author);
         if (!author) return message;
         return {
           ...message,
