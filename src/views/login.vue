@@ -108,7 +108,12 @@ export default {
         "The username was not found."
       }}</span>
       <label for="password">Password:</label>
-      <input v-model="password" type="password" placeholder="............." />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="............."
+        @keyup.enter="onVerifyPassword"
+      />
       <span v-if="passwordIncorrect || noUsernameNeitherPassword">{{
         "The password was incorrect."
       }}</span>

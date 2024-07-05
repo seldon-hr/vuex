@@ -189,6 +189,11 @@ const account = {
             commit(SET_AGE, age);
         },
 
+        logtOut({ commit }) {
+            appStorage.removeUser();
+            commit(SET_USER, new User());
+            router.push('/login');  
+        },
 
         },
     }
