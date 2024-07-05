@@ -1,5 +1,17 @@
-<script setup>
-import { RouterView } from "vue-router";
+<script>
+import { mapActions } from "vuex/dist/vuex.cjs.js";
+export default {
+  created() {
+    this.getUsers();
+    this.isThereUserOnStorage();
+  },
+  methods: {
+    ...mapActions({
+      getUsers: "account/getUsers",
+      isThereUserOnStorage: "account/isThereUserOnStorage",
+    }),
+  },
+};
 </script>
 
 <template>

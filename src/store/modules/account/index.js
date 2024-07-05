@@ -160,16 +160,23 @@ const account = {
             appStorage.setUser(state.user);
         },
 
-                orderUser({ commit, state }) {
-                    let user = state.user;
-                    const usersList = state.usersList;
-                    const userIndex = usersList.findIndex((u) => u.username === user.username);
-                    if (userIndex > -1) {
-                        usersList.splice(userIndex, 1);
-                        usersList.unshift(user);
-                        commit(SET_USER_LIST, usersList);
-                    }
-                },
+        isThereUserOnStorage({ commit }) {
+            const user = appStorage.getUser();
+            if (user) {
+                commit(SET_USER, user);
+            }
+        },
+
+        orderUser({ commit, state }) {
+            let user = state.user;
+            const usersList = state.usersList;
+            const userIndex = usersList.findIndex((u) => u.username === user.username);
+            if (userIndex > -1) {
+                usersList.splice(userIndex, 1);
+                usersList.unshift(user);
+                commit(SET_USER_LIST, usersList);
+            }
+        },
 
         calculateAge({ commit, state }) {
             const today = new Date();

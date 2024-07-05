@@ -1,10 +1,6 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
-  created() {
-    this.getUsers();
-  },
-
   data() {
     return {};
   },
