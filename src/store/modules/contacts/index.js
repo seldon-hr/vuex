@@ -23,8 +23,8 @@ const module = {
     },
 
     getters: {
-        getContacts(state) {
-            return state.contacts;
+        getContacts(state, rootState) {
+            return rootState.acount.usersList;
         },
         getContactsById: (state) => (contactId) => {
             return state.contacts.find((contact) => contact.id === contactId);

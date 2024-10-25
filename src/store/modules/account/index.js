@@ -85,10 +85,10 @@ const account = {
             } else {
                 alert("No hay usuarios");
             }
-        }, 
+        },
 
-        processUsers({ commit, state}) {
-            const listUsers =state.usersList;
+        processUsers({ commit, state }) {
+            const listUsers = state.usersList;
             listUsers.forEach((user, index) => {
                 user.password = user.username;
                 user.birthDate = "1990-01-01";
@@ -113,8 +113,8 @@ const account = {
                 commit(SET_USER, new User());
                 commit(SET_USERNAME_ENTRY, '');
                 commit(SET_USER_NOT_FOUND, true);
-            }  
-        },    
+            }
+        },
 
         resetUser({ commit }) {
             commit(SET_USER, new User());
@@ -129,7 +129,7 @@ const account = {
                         const PASSWORD_USER = state.user.password;
                         const USERNAME_USER = state.user.username;
     
-                        if (PASSWORD_USER == state.userRequest.password  && USERNAME_USER == state.userRequest.username) {
+                        if (PASSWORD_USER == state.userRequest.password && USERNAME_USER == state.userRequest.username) {
                             resolve(true);
                             commit(SET_PASSWORD_INCORRECT, false);
 
@@ -192,10 +192,15 @@ const account = {
         logtOut({ commit }) {
             appStorage.removeUser();
             commit(SET_USER, new User());
-            router.push('/login');  
+            router.push('/login');
         },
 
+    },
+    
+    getters: {
+        getUsersList(state) {
+            return state.usersList;
         },
-    }
-
+}
+};
 export default account;

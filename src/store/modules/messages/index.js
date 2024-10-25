@@ -6,7 +6,7 @@ const messages = {
     state() {
         return {
             messages: [
-                {
+/*                 {
                     id: 1,
                     author: 1,
                     message: "Bro... 👀",
@@ -53,7 +53,7 @@ const messages = {
                     timestamp: new Date().toLocaleTimeString(),
                     read: false,
                     channelId: 3,
-                },
+                }, */
             ],
             message: new Message(),
         } 
