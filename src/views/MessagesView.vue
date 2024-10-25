@@ -42,6 +42,7 @@ export default {
     },
     /* Las computadas son reactivas, se basan en que si hay un cambio estas deberían cambiar al detectar un cambio de valor */
     ...mapGetters("messages", ["getMessages"]),
+    ...mapGetters("account", ["getUsersList"]),
 
     messages: {
       get() {
@@ -67,7 +68,8 @@ export default {
 
     messagesView() {
       return this.getMessages(this.channelId)?.map((message) => {
-        const author = this.getContacts.find((p) => p.id === message.author);
+        const author = this.getUsersList.find((p) => p.id === message.author);
+        console.log(author);
         if (!author) return message;
         return {
           ...message,
