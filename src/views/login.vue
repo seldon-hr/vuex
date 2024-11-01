@@ -65,6 +65,7 @@ export default {
     }),
 
     ...mapActions({
+      logIn: "account/logIn",
       identifyUser: "account/identifyUser",
       verifyPassword: "account/verifyPassword",
       getUsers: "account/getUsers",
@@ -79,7 +80,7 @@ export default {
 
     onVerifyPassword(password) {
       if (password !== "") {
-        this.verifyPassword();
+        this.logIn();
       }
     },
   },
@@ -98,12 +99,8 @@ export default {
     <div class="box">
       <img :src="avatarProfile" alt="avatar" />
       <label for="username">Username:</label>
-      <input
-        v-model="username"
-        type="text"
-        placeholder="Jane Smith"
-        @blur="onIdentifyUser($event.target.value)"
-      />
+      <input v-model="username" type="text" placeholder="Jane Smith" />
+      <!--  @blur="onIdentifyUser($event.target.value)" -->
       <span v-if="userNotFound || noUsernameNeitherPassword">{{
         "The username was not found."
       }}</span>

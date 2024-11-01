@@ -1,12 +1,13 @@
 import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD, SET_AGE, SET_USERNAME} from '@/common/mutatition-types';
 import { gettingUsers } from '../../../api';
+import { accountService } from '../../../services/account.service';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
 import User from '../../../models/account/user';
 
 const account = {
     /* Activa la propiedad de espacio de nombre, el cual permite que cuando uno quiere 
-       hacer uso de un method, mutatio o getter hace referencia al nomber del módulo. */
+       hacer uso de un method, mutatio o getter hace referencia al nombre del módulo. */
     namespaced: true,
     state: {
         password: "",
@@ -115,6 +116,26 @@ const account = {
                 commit(SET_USER_NOT_FOUND, true);
             }
         },
+
+        logIn({ commit, dispatch, state }) {
+            let userRequest = state.userRequest;
+
+
+            accountService.login(userRequest)
+                .then(response => {
+                    if (response.status == 200) {
+                        //Si el inicio de sesión es exitoso, se asigna el usuario al storage.
+                        commit(SET_USER, response.user);
+                        dispatch('asignUserToStorage');
+                        appStorage.setToken(response.token);
+                    } else {
+                        console.error('Fallo en petición, no code 200, action:', response);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en login, action:', error);
+                });
+        },    
 
         resetUser({ commit }) {
             commit(SET_USER, new User());
