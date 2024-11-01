@@ -5,7 +5,9 @@ const BASE_URL = config.API_URL + '/auth';
 function login(itemRequest) {
     const requestOptions = {
         method: 'POST',
-        /* headers:  */
+        headers: {
+                'Content-Type': 'application/json'
+            },
         body: JSON.stringify(itemRequest)
     };
 
