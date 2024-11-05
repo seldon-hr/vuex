@@ -128,6 +128,8 @@ const account = {
                         commit(SET_USER, response.user);
                         dispatch('asignUserToStorage');
                         appStorage.setToken(response.token);
+                        //Acceder a home.
+                        router.push('/')
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
                     }

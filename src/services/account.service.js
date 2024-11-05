@@ -1,19 +1,19 @@
 import { config } from "../config";
-/* import { authHeader } from "../helpers/auth-header"; */
+import { authHeader } from "../helpers/auth-header";
 const BASE_URL = config.API_URL + '/auth';
 
 function login(itemRequest) {
     const requestOptions = {
         method: 'POST',
-        headers: {
-                'Content-Type': 'application/json'
-            },
+        headers: authHeader(),
         body: JSON.stringify(itemRequest)
     };
 
     return fetch(BASE_URL + '/login', requestOptions)
         .then(response => {
-            return response;
+            return response.json().then(data => ({
+               ...data
+            }));
         })
         .catch(error => {
             console.error('Error en login, service:', error);
