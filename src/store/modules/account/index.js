@@ -129,7 +129,8 @@ const account = {
                         dispatch('asignUserToStorage');
                         appStorage.setToken(response.token);
                         //Acceder a home.
-                        router.push('/')
+                        //TODO: Vamos a redirigir al home.
+                        router.push('/home')
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
                     }
