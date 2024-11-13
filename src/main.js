@@ -15,3 +15,5 @@ app.use(store)
 app.component("Icon", Icon)
 
 app.mount('#app')
+
+/* A write comment to check permissions */
