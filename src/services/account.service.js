@@ -1,6 +1,6 @@
 import { config } from "../config";
 import { authHeader } from "../helpers/auth-header";
-const BASE_URL = config.API_URL + '/auth';
+const BASE_URL = config.API_URL + '/api/auth';
 
 function login(itemRequest) {
     const requestOptions = {
@@ -8,7 +8,7 @@ function login(itemRequest) {
         headers: authHeader(),
         body: JSON.stringify(itemRequest)
     };
-
+    console.log(BASE_URL + '/login', requestOptions);
     return fetch(BASE_URL + '/login', requestOptions)
         .then(response => {
             return response.json().then(data => ({
