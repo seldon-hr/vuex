@@ -9,6 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "crypto-js": "^4.2.0",
     "store2": "^2.14.2",
     "vue": "^3.2.33",
