@@ -4,6 +4,7 @@ import { accountService } from '../../../services/account.service';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
 import User from '../../../models/account/user';
+import bcrypt from 'bcryptjs';
 
 const account = {
     /* Activa la propiedad de espacio de nombre, el cual permite que cuando uno quiere 
@@ -119,11 +120,13 @@ const account = {
 
         logIn({ commit, dispatch, state }) {
             let userRequest = state.userRequest;
-
+            // Encrypt the password before sending the request
+            /* const encryptedPassword = bcrypt.hashSync(userRequest.password, 10);
+            userRequest = { ...userRequest, password: encryptedPassword }; */
 
             accountService.login(userRequest)
                 .then(response => {
-                    if (response.status == 200) {
+                    if (response.success) {
                         //Si el inicio de sesión es exitoso, se asigna el usuario al storage.
                         commit(SET_USER, response.user);
                         dispatch('asignUserToStorage');
