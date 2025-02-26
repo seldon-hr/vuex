@@ -7,6 +7,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      /* Redirección del path default al /login */
+      redirect: '/login'
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView,
       children: [
