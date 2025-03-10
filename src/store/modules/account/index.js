@@ -133,7 +133,7 @@ const account = {
                         appStorage.setToken(response.token);
                         //Acceder a home.
                         //TODO: Vamos a redirigir al home.
-                        router.push('/')
+                        router.push('/home')
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
                     }
