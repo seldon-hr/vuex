@@ -13,8 +13,8 @@ const props = defineProps({
     default: "Username",
   },
   status: {
-    type: String,
-    default: null,
+    type: Boolean,
+    default: false,
   },
 });
 

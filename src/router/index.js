@@ -10,6 +10,9 @@ const router = createRouter({
       /* Redirección del path default al /login */
       redirect: '/login'
     },
+    /* Cuando realizamos la redirecciòn, ocurre que dejamos de tener la barra vacia para el uso de la app,
+        de manera que, entonces ahora no podemos alcanzar un canal de esta forma, /1, por decir el canal con id 1, sino
+        que ahora es necesario alcanzarlo de esta forma /home/1. */
     {
       path: '/home',
       name: 'home',
@@ -17,10 +20,11 @@ const router = createRouter({
       children: [
         {
           path: ':id(\\d+)',
+          name: 'channel',
           component: () => import('../views/MessagesView.vue')
         },
         {
-          path: ':(.*)',
+          path: '(.*)', 
           component: () => import('../views/VoidMessagesView.vue')
         }
       ]
