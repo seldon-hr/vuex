@@ -21,7 +21,7 @@ const props = defineProps({
 const { status } = toRefs(props);
 
 const statusText = computed(() =>
-  status.value === "active" ? "Active" : "Inactive"
+  status.value === true ? "Active" : "Inactive"
 );
 </script>
 
@@ -32,7 +32,7 @@ const statusText = computed(() =>
     </div>
     <div class="details">
       <h4>{{ username }}</h4>
-      <div class="status" :class="{ active: status === 'active' }">
+      <div class="status" :class="{ active: status === true }">
         {{ statusText }}
       </div>
     </div>

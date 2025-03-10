@@ -52,7 +52,7 @@ export default {
       <ProfileCard
         :avatar="user.avatar"
         :username="user.username"
-        :status="user.status"
+        :status="user.isOnline"
       />
       <div class="orderButtons">
         <div>
