@@ -37,6 +37,9 @@ const statusText = computed(() =>
       </div>
     </div>
     <div class="action">
+      <RouterLink :to="{ name: 'settings' }">
+        <Icon class="icon" icon="carbon:settings" />
+      </RouterLink>
       <RouterLink to="/profile">
         <Icon class="icon" icon="carbon:overflow-menu-vertical" />
       </RouterLink>

@@ -19,6 +19,13 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
+          /* De esta manera estamos accediendo a cada canal que se registra según su número de parámetro(id) de los
+            canales, ya que en componente de ChatItem.vue tenemos esta línea
+            :to="{ name: 'channel', params: { id } }"
+            name accede a la ruta, por nombre, no por ruta, así si cambia la ruta el nombre puede ser siendo el mismo.
+            Esto nos indica que el canal al cual llegará del número de id de canales a los cuales pertenece
+            el usuario que este visualizando.
+          */
           path: ':id(\\d+)',
           name: 'channel',
           component: () => import('../views/MessagesView.vue')
@@ -40,9 +47,14 @@ const router = createRouter({
       component: () => import('../views/ProfileView.vue')
     },
     {
-      path: '/about',
+      path: '/acerca',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/Settings.vue')
     }
   ]
 })

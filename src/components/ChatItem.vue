@@ -1,13 +1,10 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-defineProps(['id', 'name', 'messages'])
+import { RouterLink } from "vue-router";
+defineProps(["id", "name", "messages"]);
 </script>
 
 <template>
-  <RouterLink 
-    :to="`${id}`"
-    class="chat-item"
-  >
+  <RouterLink :to="{ name: 'channel', params: { id } }" class="chat-item">
     <h5>{{ name }}</h5>
     <div class="badge" v-if="messages">{{ messages }}</div>
   </RouterLink>
