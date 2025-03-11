@@ -135,7 +135,7 @@ export default {
     <header>
       <h2>{{ title }}</h2>
       <div class="people-list">
-        <div class="people-item" v-for="p in listUsers" :key="p.id">
+        <div v-for="p in listUsers" :key="p.id" class="people-item">
           <img :src="p.avatar" :alt="p.name" />
         </div>
       </div>
