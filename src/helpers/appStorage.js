@@ -35,6 +35,7 @@ export const appStorage = {
 
     logOut() {
         this.removeUser();
+        this.removeToken();
         this.clear();
     },
 }    
