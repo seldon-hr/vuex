@@ -1,5 +1,5 @@
 import { COMMIT_UPDATE_USERNAME, SET_PASSWORD_ENTRY, SET_USER_REQUEST, SET_USERNAME_ENTRY, SET_USER_LIST, SET_USER, SET_USER_NOT_FOUND, SET_PASSWORD_INCORRECT, SET_NO_USERNAME_NEITHER_PASSWORD, SET_AGE, SET_USERNAME} from '@/common/mutatition-types';
-import { gettingUsers } from '../../../api';
+import { usersService } from '../../../services/users.service';
 import { accountService } from '../../../services/account.service';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
@@ -78,15 +78,27 @@ const account = {
     },
 
     actions: {
-        async getUsers({ commit, dispatch }) {
-            const listUsers = await gettingUsers();
+        async getUsers({ commit/* , dispatch */ }) {
+            let listUsers = [];
 
-            if (listUsers.length > 0) {
-                commit(SET_USER_LIST, listUsers);
-                dispatch('processUsers');
-            } else {
-                alert("No hay usuarios");
-            }
+            usersService.getUsers()
+                .then(response => {
+                    console.log(response);
+                    if (response.success) {
+                        listUsers = response.body;
+                        if (listUsers.length > 0) {
+                            commit(SET_USER_LIST, listUsers);
+                            /* dispatch('processUsers'); */
+                        } else {
+                            alert("No hay usuarios");
+                        }
+                    } else {
+                        console.error('Fallo en petición, no code 200, action:', response);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en server, action:', error);
+                })
         },
 
         processUsers({ commit, state }) {
@@ -134,6 +146,10 @@ const account = {
                         //Acceder a home.
                         //TODO: Vamos a redirigir al home.
                         router.push('/home')
+                        /* Una vez que se carga el usuario procedemos a cargar sus contactos
+                            por el momento uso de lista de usuarios, después
+                            relación usuario-contactos (colección on MongoDB) */
+                        dispatch('getUsers');
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
                     }
