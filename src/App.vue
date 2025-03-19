@@ -2,7 +2,7 @@
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 export default {
   created() {
-    this.getUsers();
+    /* this.getUsers(); */
     this.isThereUserOnStorage();
   },
   methods: {
