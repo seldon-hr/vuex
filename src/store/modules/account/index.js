@@ -75,8 +75,8 @@ const account = {
             }
         },
 
-        logIn({ commit, dispatch, state }) {
-            dispatch('resetValidations');
+        async logIn({ commit, dispatch, state }) {
+            await dispatch('resetValidations');
             let userRequest = state.userRequest;
             // Encrypt the password before sending the request
             /* const encryptedPassword = bcrypt.hashSync(userRequest.password, 10);
@@ -94,7 +94,7 @@ const account = {
 
                         /* Eliminar sus credenciales una vez que se mando y fue aceptada el inicio-sesión.
                             [x]: Si dejamos esto vuelve a asignar al usuario la clase base. */
-                        /* commit(SET_USER_REQUEST, new UserRequest()); */
+                        commit(SET_USER_REQUEST, new UserRequest());
 
                         /* Una vez que se carga el usuario procedemos a cargar sus contactos
                             por el momento uso de lista de usuarios, después
@@ -171,7 +171,7 @@ const account = {
             if (user) {
                 /* Asignar usuario si este existe y redirigir a / */
                 commit(SET_USER, user);
-                router.push('/')
+                router.push('/home')
             } else {
                 /* Redirigir al usuario si no existe al /login */
                 router.push('/login');
