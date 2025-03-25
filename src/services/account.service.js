@@ -8,7 +8,7 @@ function login(itemRequest) {
         headers: authHeader(),
         body: JSON.stringify(itemRequest)
     };
-    console.log(BASE_URL + '/login', requestOptions);
+
     return fetch(BASE_URL + '/login', requestOptions)
         .then(response => {
             return response.json().then(data => ({

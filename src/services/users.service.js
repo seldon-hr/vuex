@@ -6,7 +6,6 @@ const BASE_URL = config.API_URL + '/api'
 /* Funciòn para traer los usuarios que esta persona tiene, dependiendo va a tener
 despuès se van a filtrar por usuario. */
 function getUsers() {
-    console.log('entry URL method.', (`${BASE_URL}/auth/getUsers`));
     const requestOptions = {
         method: 'POST',
        /*  headers: authHeader(), */
