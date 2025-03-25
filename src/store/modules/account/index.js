@@ -71,12 +71,12 @@ const account = {
             } else {
                 /* Usuario no encontrado */
                 commit(SET_USER, new User());
-                commit(SET_USERNAME_ENTRY, '');
                 commit(SET_USER_NOT_FOUND, true);
             }
         },
 
         logIn({ commit, dispatch, state }) {
+            dispatch('resetValidations');
             let userRequest = state.userRequest;
             // Encrypt the password before sending the request
             /* const encryptedPassword = bcrypt.hashSync(userRequest.password, 10);
@@ -91,12 +91,24 @@ const account = {
                         appStorage.setToken(response.token);
                         //Acceder a home.
                         router.push('/home')
+
+                        /* Eliminar sus credenciales una vez que se mando y fue aceptada el inicio-sesión.
+                            [x]: Si dejamos esto vuelve a asignar al usuario la clase base. */
+                        /* commit(SET_USER_REQUEST, new UserRequest()); */
+
                         /* Una vez que se carga el usuario procedemos a cargar sus contactos
                             por el momento uso de lista de usuarios, después
                             relación usuario-contactos (colección on MongoDB) */
                         dispatch('getUsers');
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
+                        if (response.code == -2) {
+                            commit(SET_PASSWORD_INCORRECT, true);
+                        } else if (response.code == -1) {
+                            /* Usuario no encontrado */
+                            /* commit(SET_USER, new User()); */
+                            commit(SET_USER_NOT_FOUND, true);
+                        }
                     }
                 })
                 .catch(error => {
@@ -107,6 +119,11 @@ const account = {
         resetUser({ commit }) {
             commit(SET_USER, new User());
             commit(SET_USER_REQUEST, new UserRequest());
+        },
+
+        resetValidations({ commit }) {
+            commit(SET_PASSWORD_INCORRECT, false);
+            commit(SET_USER_NOT_FOUND, false);
         },
 
     
@@ -123,7 +140,7 @@ const account = {
                             commit(SET_PASSWORD_INCORRECT, false);
 
                             //Eliminar el usuarioRequest
-                            commit(SET_USER_REQUEST, {});
+                            commit(SET_USER_REQUEST, new UserRequest);
 
                             //Asignar el usuario al storage
                             dispatch('asignUserToStorage');
@@ -154,7 +171,7 @@ const account = {
             if (user) {
                 /* Asignar usuario si este existe y redirigir a / */
                 commit(SET_USER, user);
-                router.push('/home')
+                router.push('/')
             } else {
                 /* Redirigir al usuario si no existe al /login */
                 router.push('/login');
@@ -208,6 +225,7 @@ const account = {
             state.userRequest = userRequest;
         },
         [SET_USER](state, user) {
+            console.log('entry with user', user);
             state.user = user;
         },
         [SET_USERNAME_ENTRY](state, usernameEntry) {
