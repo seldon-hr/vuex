@@ -4,6 +4,7 @@ import { accountService } from '../../../services/account.service';
 import router from '@/router';
 import { appStorage } from '../../../helpers/appStorage';
 import User from '../../../models/account/user';
+import UserRequest from '../../../models/account/userRequest';
 import bcrypt from 'bcryptjs';
 
 const account = {
@@ -14,10 +15,7 @@ const account = {
         password: "",
         username: "",
         user: new User(),
-        userRequest: {
-            username: "",
-            password: "",
-        },
+        userRequest: new UserRequest(),
         usersList: [],
 
         /* Rules */
@@ -26,64 +24,12 @@ const account = {
         noUsernameNeitherPassword: false,
     },
 
-    getters: {
-        getUser(state) {
-            return state.user;
-        },
-        getUsername(state) {
-            /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
-            return state.username.split("").join("");
-        },
-        getAge(state) {
-            return state.user.age;
-        },
-    },
-
-    mutations: {
-        [SET_USER_LIST](state, usersList) {
-            state.usersList = usersList;
-        },
-        [COMMIT_UPDATE_USERNAME](state, newUsername) {
-            state.username = newUsername;
-        },
-        [SET_USERNAME](state, age) {
-            state.user.username = age;
-        },
-        [SET_USER_REQUEST](state, userRequest) {
-            state.userRequest = userRequest;
-        },
-        [SET_USER](state, user) {
-            state.user = user;
-        },
-        [SET_USERNAME_ENTRY](state, usernameEntry) {
-            state.userRequest.username = usernameEntry;
-        },
-        [SET_PASSWORD_ENTRY](state, passwordEntry) {
-            state.userRequest.password = passwordEntry;
-        },
-        [SET_AGE](state, age) {
-            state.user.age = age;
-        },
-        // Rules
-        [SET_USER_NOT_FOUND](state, userNotFound) {
-            state.userNotFound = userNotFound;
-        },
-        [SET_PASSWORD_INCORRECT](state, value) {
-            state.passwordIncorrect = value;
-        },
-        [SET_NO_USERNAME_NEITHER_PASSWORD](state, value) {
-            state.noUsernameNeitherPassword = value;
-        },
-
-    },
-
     actions: {
         async getUsers({ commit/* , dispatch */ }) {
             let listUsers = [];
 
             usersService.getUsers()
                 .then(response => {
-                    console.log(response);
                     if (response.success) {
                         listUsers = response.body;
                         if (listUsers.length > 0) {
@@ -144,7 +90,6 @@ const account = {
                         dispatch('asignUserToStorage');
                         appStorage.setToken(response.token);
                         //Acceder a home.
-                        //TODO: Vamos a redirigir al home.
                         router.push('/home')
                         /* Una vez que se carga el usuario procedemos a cargar sus contactos
                             por el momento uso de lista de usuarios, después
@@ -161,6 +106,7 @@ const account = {
 
         resetUser({ commit }) {
             commit(SET_USER, new User());
+            commit(SET_USER_REQUEST, new UserRequest());
         },
 
     
@@ -206,7 +152,12 @@ const account = {
         isThereUserOnStorage({ commit }) {
             const user = appStorage.getUser();
             if (user) {
+                /* Asignar usuario si este existe y redirigir a / */
                 commit(SET_USER, user);
+                router.push('/home')
+            } else {
+                /* Redirigir al usuario si no existe al /login */
+                router.push('/login');
             }
         },
 
@@ -232,18 +183,66 @@ const account = {
             commit(SET_AGE, age);
         },
 
-        logtOut({ commit }) {
+        logtOut({ dispatch }) {
+            /* Eliminar user del storage */
             appStorage.removeUser();
-            commit(SET_USER, new User());
+            appStorage.removeToken();
+            /* Eliminar del state */
+            dispatch('resetUser');
             router.push('/login');
         },
 
     },
-    
-    getters: {
-        getUsersList(state) {
-            return state.usersList;
+
+    mutations: {
+        [SET_USER_LIST](state, usersList) {
+            state.usersList = usersList;
         },
-}
+        [COMMIT_UPDATE_USERNAME](state, newUsername) {
+            state.username = newUsername;
+        },
+        [SET_USERNAME](state, age) {
+            state.user.username = age;
+        },
+        [SET_USER_REQUEST](state, userRequest) {
+            state.userRequest = userRequest;
+        },
+        [SET_USER](state, user) {
+            state.user = user;
+        },
+        [SET_USERNAME_ENTRY](state, usernameEntry) {
+            state.userRequest.username = usernameEntry;
+        },
+        [SET_PASSWORD_ENTRY](state, passwordEntry) {
+            state.userRequest.password = passwordEntry;
+        },
+        [SET_AGE](state, age) {
+            state.user.age = age;
+        },
+        // Rules
+        [SET_USER_NOT_FOUND](state, userNotFound) {
+            state.userNotFound = userNotFound;
+        },
+        [SET_PASSWORD_INCORRECT](state, value) {
+            state.passwordIncorrect = value;
+        },
+        [SET_NO_USERNAME_NEITHER_PASSWORD](state, value) {
+            state.noUsernameNeitherPassword = value;
+        },
+
+    },
+
+    getters: {
+        getUser(state) {
+            return state.user;
+        },
+        getUsername(state) {
+            /* Más específicamente los getters permiten manipular información sin necesidad de actualizarla. */
+            return state.username.split("").join("");
+        },
+        getAge(state) {
+            return state.user.age;
+        },
+    }
 };
 export default account;
