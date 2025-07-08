@@ -1,8 +1,9 @@
+import { channelsService } from "../../../services/channels.service";
 const module = {
     namespaced: true,
     state: {
         channels: [
-            {
+            /* {
                 id: 1,
                 name: "General",
                 messages: [],
@@ -21,7 +22,7 @@ const module = {
                 id: 4,
                 name: "Tricks",
                 messages: [],
-            },
+            }, */
         ],
         currentChannel: null,
     },
@@ -45,10 +46,8 @@ const module = {
         getCurrentChannel: (state) => {
             return state.currentChannel;
         },
-       
     },
 
-    
     mutations: {
         setChannels(state, channels) {
             state.channels = channels;
@@ -64,6 +63,21 @@ const module = {
         },
         setCurrentChannel({ commit }, currentChannel) {
             commit("setCurrentChannel", currentChannel);
+        },
+        getChannelsByUser({ commit, rootState }) {
+            let itemRequest = {
+                userId: rootState.account.user._id,
+            };
+
+            channelsService.getChannelsByUser(itemRequest)
+                .then(response => {
+                    if (response.success) {
+                        commit("setChannels", response.body);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al consumir.', error);
+                })
         },
     },
 

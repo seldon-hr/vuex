@@ -100,6 +100,8 @@ const account = {
                             por el momento uso de lista de usuarios, después
                             relación usuario-contactos (colección on MongoDB) */
                         dispatch('getUsers');
+                        //Mandar llamar los canales de este usuario al los que pertenece.
+                        dispatch('channels/getChannelsByUser', null, { root: true });
                     } else {
                         console.error('Fallo en petición, no code 200, action:', response);
                         if (response.code == -2) {
