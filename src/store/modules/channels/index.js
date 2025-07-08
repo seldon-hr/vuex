@@ -73,6 +73,7 @@ const module = {
                 .then(response => {
                     if (response.success) {
                         commit("setChannels", response.body);
+                    //TODO: Agregar los canales al storage para que una vez que se refresque la página debe estar la page.
                     }
                 })
                 .catch(error => {
