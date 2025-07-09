@@ -64,7 +64,7 @@ const module = {
         setCurrentChannel({ commit }, currentChannel) {
             commit("setCurrentChannel", currentChannel);
         },
-        getChannelsByUser({ commit, rootState }) {
+        getChannelsByUser({ commit, rootState, dispatch, state }) {
             let itemRequest = {
                 userId: rootState.account.user._id,
             };
@@ -73,6 +73,7 @@ const module = {
                 .then(response => {
                     if (response.success) {
                         commit("setChannels", response.body);
+                        dispatch("account/assignChannelsToStorage", state.channels, { root: true });
                     //TODO: Agregar los canales al storage para que una vez que se refresque la página debe estar la page.
                     }
                 })

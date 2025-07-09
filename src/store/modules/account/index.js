@@ -167,6 +167,10 @@ const account = {
         asignUserToStorage({ state }) {
             appStorage.setUser(state.user);
         },
+        assignChannelsToStorage({  }, channels ) {
+            appStorage.setChannelUsers(channels);
+        },
+
 
         isThereUserOnStorage({ commit }) {
             const user = appStorage.getUser();

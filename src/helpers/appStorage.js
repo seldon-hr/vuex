@@ -1,6 +1,8 @@
 import storage from 'store2';
 
 const USER = 'USER';
+const TOKEN = 'TOKEN';
+const CHANNEL_USERS = 'CHANNEL_USERS';
 
 export const appStorage = {
 
@@ -17,16 +19,25 @@ export const appStorage = {
 
     //--TOKEN--
     setToken(token) {
-        storage.set('TOKEN', token);
+        storage.set(TOKEN, token);
     },
     getToken() {
-        return storage.get('TOKEN');
+        return storage.get(TOKEN);
     },
     removeToken() {
-        storage.remove('TOKEN');
+        storage.remove(TOKEN);
     },
 
-
+    //--channelUsers--
+    setChannelUsers(channelUsers) {
+        storage.set(CHANNEL_USERS, channelUsers);
+    },
+    getChannelUsers() {
+        return storage.get(CHANNEL_USERS);
+    },
+    removeChannelUsers() {
+        storage.remove(CHANNEL_USERS);
+    },
 
     //--CLEAR--
     clear() {
@@ -36,6 +47,6 @@ export const appStorage = {
     logOut() {
         this.removeUser();
         this.removeToken();
-        this.clear();
+        this.removeChannelUsers();
     },
 }    
