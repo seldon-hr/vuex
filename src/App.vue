@@ -1,9 +1,11 @@
 <script>
 import { mapActions } from "vuex/dist/vuex.cjs.js";
+import { appStorage } from "./helpers/appStorage";
 export default {
   created() {
     /* this.getUsers(); */
-    this.isThereUserOnStorage();
+    /*  this.isThereUserOnStorage(); */
+    appStorage.cargarStorage();
   },
   methods: {
     ...mapActions({
