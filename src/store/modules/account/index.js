@@ -207,9 +207,8 @@ const account = {
         },
 
         logtOut({ dispatch }) {
-            /* Eliminar user del storage */
-            appStorage.removeUser();
-            appStorage.removeToken();
+            /* Limpiear el storage*/
+            appStorage.clear();
             /* Eliminar del state */
             dispatch('resetUser');
             router.push('/login');
