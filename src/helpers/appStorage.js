@@ -9,15 +9,19 @@ const CHANNEL_USERS = 'CHANNEL_USERS';
 export const appStorage = {
 
     cargarStorage() {
+        const wholeStorage = storage.getAll();
+        console.debug(`Storage encontrado:`, wholeStorage);
         const user = this.getUser();
         const channels = this.getChannelUsers();
         /* const token = this.getToken(); */
 
         if (user) {
             store.commit('account/' + SET_USER, user);
+            console.info(`Usuario cargado desde storage.`);
         }
         if (channels) {
             store.commit('channels/setChannels', channels);
+            console.info(`Canales del user cargados desde storage.`);
         }
         /* if (token) {
             //Validaciòn del token.
