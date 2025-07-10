@@ -10,8 +10,10 @@ export const appStorage = {
 
     cargarStorage() {
         const wholeStorage = storage.getAll();
-        console.debug(`Storage encontrado:`, wholeStorage);
+        console.debug(`Storage encontrado:`)
+        console.table(wholeStorage);
         const user = this.getUser();
+        
         const channels = this.getChannelUsers();
         /* const token = this.getToken(); */
 
