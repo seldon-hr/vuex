@@ -92,11 +92,12 @@ const account = {
                         //Acceder a home.
                         router.push('/home')
 
-                        /* Eliminar sus credenciales una vez que se mando y fue aceptada el inicio-sesión.
-                            [x]: Si dejamos esto vuelve a asignar al usuario la clase base. */
-                        commit(SET_USER_REQUEST, new UserRequest());
-
-                        /* Una vez que se carga el usuario procedemos a cargar sus contactos
+                        /* Una vez que se carga el usuario procedemos a cargar 
+                        aquella información necesaria según a la que este vinculada en la pantalla de inicio:
+                        - contactos (análisis si será requerida.)
+                        - canales.
+                        
+                        sus contactos
                             por el momento uso de lista de usuarios, después
                             relación usuario-contactos (colección on MongoDB) */
                         dispatch('getUsers');
