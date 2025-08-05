@@ -90,6 +90,13 @@ export default {
       },
     },
   },
+  created() {
+    //TODO: Mandar el id correcto del store.
+    let itemRequest = {
+      channelId: this.channelId,
+    };
+    this.getMessagesByChannel(itemRequest);
+  },
   mounted() {
     this.scrollToBottom();
   },
@@ -97,6 +104,7 @@ export default {
     ...mapActions({
       updateMessage: "messages/updateMessage",
       newMessage: "messages/newMessage",
+      getMessagesByChannel: "messages/getMessagesByChannel",
     }),
 
     scrollToBottom() {
